@@ -40,5 +40,8 @@
         "single"
       ]
     }
+  },
+  "dependencies": {
+    "angular-ui-router": "^0.3.1"
   }
 }
