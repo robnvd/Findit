@@ -1,0 +1,28 @@
+{
+  "name": "LicentaWeb",
+  "private": true,
+  "homepage": "https://github.com/robnvd/LicentaWeb",
+  "authors": [
+    "Robert Ursu (robnvd01@gmail.com)"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "~3.3.5",
+    "modernizr": "~2.8.1",
+    "angular-google-maps": "^2.3.3",
+    "angular-route": "^1.5.7",
+    "angularjs-geolocation": "^0.1.1"
+  },
+  "overrides": {
+    "bootstrap-sass": {
+      "main": [
+        "assets/stylesheets/_bootstrap.scss",
+        "assets/fonts/bootstrap/*",
+        "assets/javascripts/bootstrap.js"
+      ]
+    }
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  }
+}
