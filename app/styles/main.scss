@@ -1,10 +1,12 @@
 $icon-font-path: '../fonts/';
 
-// bower:scss
 @import "bower_components/bootswatch/flatly/_variables.scss";
+
+// bower:scss
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
-@import "bower_components/bootswatch/flatly/_bootswatch.scss";
 // endbower
+
+@import "bower_components/bootswatch/flatly/bootswatch.scss";
 
 html, body {
     height: 95%;

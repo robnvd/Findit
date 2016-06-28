@@ -12,13 +12,13 @@
 
             uiGmapGoogleMapApiProvider.configure({
                 key: 'AIzaSyCBPHeuLgfGtYoiSK6vxHo9MRtDTNJiNrE',
-                //libraries: 'weather, geometry, visualization',
+                libraries: 'places',
             });
 
             $stateProvider
                 .state('home', {
                     url: '/home',
-                    templateUrl: 'scripts/modules/home/home.html',
+                    templateUrl: 'templates/home/home.html',
                     controller: 'homeController'
                 })
             $urlRouterProvider.otherwise('/home');
@@ -32,7 +32,8 @@
         'angular-jwt',
         'uiGmapgoogle-maps',
         'ui.bootstrap',
-        'geolocation'
+        'geolocation',
+        'ngMessages'
     ])
         .config(['$httpProvider', 'authProvider', 'jwtInterceptorProvider', 'uiGmapGoogleMapApiProvider',
             function ($httpProvider, authProvider, jwtInterceptorProvider, uiGmapGoogleMapApiProvider) {
@@ -90,7 +91,7 @@
 
                 uiGmapGoogleMapApiProvider.configure({
                     key: 'AIzaSyCBPHeuLgfGtYoiSK6vxHo9MRtDTNJiNrE',
-                    //libraries: 'weather, geometry, visualization',
+                    libraries: 'places',
                 });
             }])
         .run(['auth', 'store', 'jwtHelper', '$rootScope',
