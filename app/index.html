@@ -3,9 +3,9 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="Licenta Web App">
+  <meta name="description" content="FindIt">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Licenta Web</title>
+  <title>FindIt</title>
 
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <!-- Place favicon.ico in the root directory -->
@@ -37,76 +37,34 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-        <a class="navbar-brand" href="#">Licenta Web</a>
+        <a class="navbar-brand" href="#">Findit</a>
       </div>
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-          <li><a href="#">Link</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown" ng-show="auth.isAuthenticated">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome {{auth.profile.email}} <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Separated link</a></li>
-              <li class="divider"></li>
-              <li><a href="#">One more separated link</a></li>
+              <li><a href="#">Bookmarks</a></li>
+              <li><a href="#">Your reviews & ratings</a></li>
             </ul>
           </li>
-        </ul>
-        <form class="navbar-form navbar-left" role="search">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search">
-          </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a ng-click="login()">Log in</a></li>
+          <li><a ng-show="auth.isAuthenticated" href="#" ng-click="logout()">Log out</a></li>
+          <li><a ng-show="!auth.isAuthenticated" href="#" ng-click="login()">Log in</a></li>
         </ul>
       </div>
     </div>
   </nav>
-  <div class="container" ui-view>
-    Loading...
-    <!--<div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-        <h3 class="text-muted">Licenta Web</h3>
-      </div>
-
-      <div class="jumbotron">
-        <h1>'Allo, 'Allo!</h1>
-        <p class="lead">Always a pleasure scaffolding your apps.</p>
-        <p><a class="btn btn-lg btn-success" href="#">Splendid!</a></p>
-      </div>
-
-      <div class="row marketing">
-        <div class="col-lg-6">
-          <h4>HTML5 Boilerplate</h4>
-          <p>HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.</p>
-          
-          <h4>Sass</h4>
-          <p>Sass is the most mature, stable, and powerful professional grade CSS extension language in the world.</p>
-          
-          <h4>Bootstrap</h4>
-          <p>Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>
-          <h4>Modernizr</h4>
-          <p>Modernizr is an open-source JavaScript library that helps you build the next generation of HTML5 and CSS3-powered websites.</p>
-          
-        </div>
-      </div>
-
-      <div class="footer">
-        <p>♥ from the Yeoman team</p>
-      </div>-->
-  </div>
-
+  <!--<div class="container">-->
+    <ui-view>
+      Loading...
+    </ui-view>
+  <!--</div>-->
+  <footer class="footer navbar-fixed-bottom">
+    <div class="container">
+      <p class="text-muted">Find the places you are looking for</p>
+    </div>
+  </footer>
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
   <script>
       (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
@@ -124,11 +82,11 @@
   <script src="/bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
   <script src="/bower_components/lodash/lodash.js"></script>
   <script src="/bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
-  <!--<script src="/bower_components/markerclustererplus/src/markerclusterer.js"></script>
-  <script src="/bower_components/google-maps-utility-library-v3-markerwithlabel/dist/markerwithlabel.js"></script>
-  <script src="/bower_components/google-maps-utility-library-v3-infobox/dist/infobox.js"></script>
-  <script src="/bower_components/google-maps-utility-library-v3-keydragzoom/dist/keydragzoom.js"></script>
-  <script src="/bower_components/js-rich-marker/src/richmarker.js"></script>-->
+  <script src="/bower_components/markerclustererplus/src/markerclusterer.js"></script>
+  <!--<script src="/bower_components/google-maps-utility-library-v3-markerwithlabel/dist/markerwithlabel.js"></script>-->
+  <!--<script src="/bower_components/google-maps-utility-library-v3-infobox/dist/infobox.js"></script>-->
+  <!--<script src="/bower_components/google-maps-utility-library-v3-keydragzoom/dist/keydragzoom.js"></script>-->
+  <!--<script src="/bower_components/js-rich-marker/src/richmarker.js"></script>-->
   <script src="/bower_components/angularjs-geolocation/src/geolocation.js"></script>
   <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
@@ -163,8 +121,6 @@
   <script src="scripts/modules/home/homeController.js"></script>
   <script src="scripts/modules/home/homeService.js"></script>
   <script src="scripts/modules/nav/navController.js"></script>
-  <script src="scripts/modules/nav/loginController.js"></script>
-
 
   <script src="scripts/directives/compareToDirective.js"></script>
   <!-- endbuild -->
