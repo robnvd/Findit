@@ -1,6 +1,6 @@
 <div class="home-container fill">
     <div class="col-lg-9 col-md-9 col-sm-12 fill fill-map">
-        <ui-gmap-google-map center="map.center" zoom="map.zoom" options="options">
+        <ui-gmap-google-map center="map.center" zoom="map.zoom" options="map.options" events="map.events" control="map.control">
             <ui-gmap-marker idKey="'self'" coords='map.center'></ui-gmap-marker>
             <ui-gmap-circle center='map.center' radius='searchData.radius' fill="{color: 'red', opacity: 0.1}" stroke="{color: 'red', weigth: 100, opacity: 0.3}"
                 clickable='false' draggable='false' editable='false' visible='true'>

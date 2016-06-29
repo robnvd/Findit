@@ -3,18 +3,40 @@
         .module('LicentaWeb.Controllers')
         .controller('homeController', controller);
 
-    controller.$inject = ['$scope', 'auth', 'store', 'geolocation'];
-    function controller($scope, auth, store, geolocation) {
+    controller.$inject = ['$scope', 'auth', 'store', 'geolocation', '$timeout'];
+    function controller($scope, auth, store, geolocation, $timeout) {
 
         $scope.searchData = {
             location: 'near',
             radius: 700
         };
+        
+        $scope.map = {
+            center: {
+                latitude: 44.4267674,
+                longitude: 26.102538399999958
+            },
+            options: {
+                scrollwheel: true,
+            },
+            events: {
+                bounds_changed: function (thing) {
+                    console.log('map bounds changed');
+                    console.log(thing);
+                },
+                center_changed: function (thing) {
+                    console.log('map center changed');
+                    console.log(thing);
+                },
+            },
+            control: {},
+            zoom: 14
+        };
 
         $scope.place = {
             template: 'place-searchbox.html',
             events: {
-                places_changed: function(searchbox) {
+                places_changed: function (searchbox) {
                     var places = searchbox.getPlaces();
                     console.log(places);
                 }
@@ -39,9 +61,6 @@
             }
         }
 
-        $scope.map = { center: { latitude: 44.4267674, longitude: 26.102538399999958 }, zoom: 14 };
-        $scope.options = { scrollwheel: true };
-
         geolocation.getLocation().then(function (data) {
             changeMapCenter(data.coords.latitude, data.coords.longitude);
         }, function () {
@@ -56,14 +75,18 @@
             console.log($scope.searchData);
         };
 
-        var changeMapCenter = function(lat, long) {
-            $scope.map = {
-                center: {
-                    latitude: lat,
-                    longitude: long
-                },
-                zoom: 14
+        var changeMapCenter = function (lat, long) {
+            $scope.map.center = {
+                latitude: lat,
+                longitude: long
             };
         };
+
+        $timeout(function(){
+            console.log('done stuff');
+            console.log($scope.map.control);
+            console.log($scope.map.control.getGMap());
+            console.log($scope.map.control.getGMap().getBounds());
+        }, 5000);
     }
 })();
