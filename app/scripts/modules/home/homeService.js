@@ -1,5 +1,5 @@
-(function() {
-'use strict';
+(function () {
+    'use strict';
 
     angular
         .module('LicentaWeb.Services')
@@ -8,9 +8,9 @@
     service.$inject = ['$http'];
     function service($http) {
         this.exposedFn = exposedFn;
-        
+
         ////////////////
 
         function exposedFn() { }
-        }
+    }
 })();

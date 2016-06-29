@@ -8,13 +8,7 @@
         'ui.router',
         'ui.bootstrap'
     ])
-        .config(['$stateProvider', '$urlRouterProvider', 'uiGmapGoogleMapApiProvider', function ($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
-
-            uiGmapGoogleMapApiProvider.configure({
-                key: 'AIzaSyCBPHeuLgfGtYoiSK6vxHo9MRtDTNJiNrE',
-                libraries: 'places',
-            });
-
+        .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
             $stateProvider
                 .state('home', {
                     url: '/home',
@@ -35,8 +29,8 @@
         'geolocation',
         'ngMessages'
     ])
-        .config(['$httpProvider', 'authProvider', 'jwtInterceptorProvider', 'uiGmapGoogleMapApiProvider',
-            function ($httpProvider, authProvider, jwtInterceptorProvider, uiGmapGoogleMapApiProvider) {
+        .config(['$httpProvider', 'authProvider', 'jwtInterceptorProvider',
+            function ($httpProvider, authProvider, jwtInterceptorProvider,) {
                 authProvider.init({
                     domain: 'robnvd.eu.auth0.com',
                     clientID: '5zc4xm7BSkl3zPRAYq9Fga4v1HyZLRcx',
@@ -88,11 +82,6 @@
                 }];
 
                 $httpProvider.interceptors.push('jwtInterceptor');
-
-                uiGmapGoogleMapApiProvider.configure({
-                    key: 'AIzaSyCBPHeuLgfGtYoiSK6vxHo9MRtDTNJiNrE',
-                    libraries: 'places',
-                });
             }])
         .run(['auth', 'store', 'jwtHelper', '$rootScope',
             function (auth, store, jwtHelper, $rootScope) {

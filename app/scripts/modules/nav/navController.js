@@ -7,11 +7,11 @@
     function controller($scope, auth, store) {
         $scope.auth = auth;
 
-        $scope.login = function() {
+        $scope.login = function () {
             auth.signin({}, onLoginSuccess, onLoginFailed);
         };
 
-        $scope.logout = function() {
+        $scope.logout = function () {
             auth.signout();
             store.remove('profile');
             store.remove('token');

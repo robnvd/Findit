@@ -3,14 +3,14 @@
         .module('LicentaWeb.Controllers')
         .controller('homeController', controller);
 
-    controller.$inject = ['$scope', 'auth', 'store', 'geolocation', '$timeout'];
-    function controller($scope, auth, store, geolocation, $timeout) {
+    controller.$inject = ['$scope', 'auth', 'store', 'geolocation', '$timeout', 'uiGmapGoogleMapApi'];
+    function controller($scope, auth, store, geolocation, $timeout, uiGmapGoogleMapApi) {
 
         $scope.searchData = {
             location: 'near',
             radius: 700
         };
-        
+
         $scope.map = {
             center: {
                 latitude: 44.4267674,
@@ -20,13 +20,13 @@
                 scrollwheel: true,
             },
             events: {
-                bounds_changed: function (thing) {
-                    console.log('map bounds changed');
-                    console.log(thing);
+                bounds_changed: function (map) {
+                    //console.log('map bounds changed');
+                    //console.log(map);
                 },
-                center_changed: function (thing) {
-                    console.log('map center changed');
-                    console.log(thing);
+                center_changed: function (map) {
+                    //console.log('map center changed');
+                    //console.log(map);
                 },
             },
             control: {},
@@ -46,11 +46,13 @@
         $scope.remoteLocation = {
             template: 'remoteLocation-searchbox.html',
             events: {
-                places_changed: function (searchBox) {
-                    var places = searchBox.getPlaces();
+                places_changed: (searchBox) => {
+                    const places = searchBox.getPlaces();
                     if (places.length > 0) {
-                        if (places[0].geometry && places[0].geometry.location) {
-                            changeMapCenter(places[0].geometry.location.lat(), places[0].geometry.location.lng());
+                        const [place] = places;
+                        if (place.geometry && place.geometry.location) {
+                            const location = place.geometry.location;
+                            changeMapCenter(location.lat(), location.lng());
                         } else {
                             console.log('Could not obtain coordinates, try another place');
                         }
@@ -61,32 +63,35 @@
             }
         }
 
-        geolocation.getLocation().then(function (data) {
+        geolocation.getLocation().then((data) => {
             changeMapCenter(data.coords.latitude, data.coords.longitude);
-        }, function () {
+        }, () => {
             changeMapCenter(44.4267674, 26.102538399999958);
-        })
+        });
 
-        $scope.login = function () {
+        $scope.login = () => {
             auth.signin();
         };
 
-        $scope.search = function () {
+        $scope.search = () => {
             console.log($scope.searchData);
-        };
-
-        var changeMapCenter = function (lat, long) {
+        }
+        var changeMapCenter = (lat, long) => {
             $scope.map.center = {
                 latitude: lat,
                 longitude: long
             };
         };
+       
+        uiGmapGoogleMapApi.then((maps) => {
+            //console.log(maps.places.SearchBox.getPlaces());
+        });
 
-        $timeout(function(){
-            console.log('done stuff');
-            console.log($scope.map.control);
-            console.log($scope.map.control.getGMap());
-            console.log($scope.map.control.getGMap().getBounds());
-        }, 5000);
+        // $timeout(function () {
+        //     console.log('done stuff');
+        //     console.log($scope.map.control);
+        //     console.log($scope.map.control.getGMap());
+        //     console.log($scope.map.control.getGMap().getBounds());
+        // }, 5000);
     }
 })();

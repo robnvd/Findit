@@ -56,24 +56,25 @@
     </div>
   </nav>
   <!--<div class="container">-->
-    <ui-view>
-      Loading...
-    </ui-view>
+  <ui-view>
+    Loading...
+  </ui-view>
   <!--</div>-->
   <!--<footer class="footer navbar-fixed-bottom">
     <div class="container">
       <p class="text-muted">Find the places you are looking for</p>
     </div>
   </footer>-->
-  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+
   <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='https://www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-XXXXX-X');ga('send','pageview');
-    </script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-80071424-1', 'auto');ga('send', 'pageview');
+  </script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBPHeuLgfGtYoiSK6vxHo9MRtDTNJiNrE&libraries=drawing,geometry,places,visualization"></script>
 
   <!-- build:js scripts/vendor.js -->
   <!-- bower:js -->
@@ -82,10 +83,10 @@
   <script src="/bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
   <script src="/bower_components/lodash/lodash.js"></script>
   <script src="/bower_components/markerclustererplus/src/markerclusterer.js"></script>
-  <!--<script src="/bower_components/google-maps-utility-library-v3-markerwithlabel/dist/markerwithlabel.js"></script>
+  <script src="/bower_components/google-maps-utility-library-v3-markerwithlabel/dist/markerwithlabel.js"></script>
   <script src="/bower_components/google-maps-utility-library-v3-infobox/dist/infobox.js"></script>
   <script src="/bower_components/google-maps-utility-library-v3-keydragzoom/dist/keydragzoom.js"></script>
-  <script src="/bower_components/js-rich-marker/src/richmarker.js"></script>-->
+  <script src="/bower_components/js-rich-marker/src/richmarker.js"></script>
   <script src="/bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
   <script src="/bower_components/angularjs-geolocation/src/geolocation.js"></script>
   <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
