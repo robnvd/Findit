@@ -4,6 +4,7 @@
         'LicentaWeb.Controllers',
         'LicentaWeb.Services',
         'LicentaWeb.Directives',
+        'LicentaWeb.Filters',
         'ngMap',
         'ui.router',
         'ui.bootstrap'
@@ -121,4 +122,5 @@
     //Directives module
 
     angular.module('LicentaWeb.Directives', []);
+    angular.module('LicentaWeb.Filters', []);
 })();
