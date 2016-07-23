@@ -7,10 +7,16 @@
 
     service.$inject = ['$http'];
     function service($http) {
-        this.exposedFn = exposedFn;
+        this.createMarker = createMarker;
 
-        ////////////////
-
-        function exposedFn() { }
+        function createMarker(map, place, clickEvent) {
+            var placeLoc = place.geometry.location;
+            var marker = new google.maps.Marker({
+                map: map,
+                position: place.geometry.location
+            });
+            if(clickEvent) google.maps.event.addListener(marker, 'click', () => clickEvent(place));
+            return marker;
+        }
     }
 })();

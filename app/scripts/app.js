@@ -4,7 +4,7 @@
         'LicentaWeb.Controllers',
         'LicentaWeb.Services',
         'LicentaWeb.Directives',
-        'uiGmapgoogle-maps',
+        'ngMap',
         'ui.router',
         'ui.bootstrap'
     ])
@@ -13,7 +13,8 @@
                 .state('home', {
                     url: '/home',
                     templateUrl: 'templates/home/home.html',
-                    controller: 'homeController'
+                    controller: 'homeController',
+                    controllerAs: 'vm'
                 })
             $urlRouterProvider.otherwise('/home');
         }]);
@@ -24,13 +25,13 @@
         'angular-storage',
         'auth0',
         'angular-jwt',
-        'uiGmapgoogle-maps',
+        'ngMap',
         'ui.bootstrap',
         'geolocation',
         'ngMessages'
     ])
         .config(['$httpProvider', 'authProvider', 'jwtInterceptorProvider',
-            function ($httpProvider, authProvider, jwtInterceptorProvider,) {
+            function ($httpProvider, authProvider, jwtInterceptorProvider) {
                 authProvider.init({
                     domain: 'robnvd.eu.auth0.com',
                     clientID: '5zc4xm7BSkl3zPRAYq9Fga4v1HyZLRcx',
