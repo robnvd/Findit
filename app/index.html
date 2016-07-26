@@ -28,7 +28,7 @@
   <!--[if lt IE 10]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-  <nav class="navbar navbar-default" ng-controller="navController">
+  <nav class="navbar navbar-default" ng-controller="navController as vm">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -42,15 +42,15 @@
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown" ng-show="auth.isAuthenticated">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome {{auth.profile.email}} <span class="caret"></span></a>
+          <li class="dropdown" if-user>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome Gigel <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Bookmarks</a></li>
-              <li><a href="#">Your reviews & ratings</a></li>
+              <li ng-class="{active: vm.isActive('/bookmarks')}"><a href="#">Bookmarks</a></li>
+              <li ng-class="{active: vm.isActive('/reviews')}"><a href="#">Your reviews & ratings</a></li>
             </ul>
           </li>
-          <li><a ng-show="auth.isAuthenticated" href="#" ng-click="logout()">Log out</a></li>
-          <li><a ng-show="!auth.isAuthenticated" href="#" ng-click="login()">Log in</a></li>
+          <li if-user><a href="#" sp-logot>Log out</a></li>
+          <li if-not-user><a href="#" ui-sref="login">Log in</a></li>
         </ul>
       </div>
     </div>
@@ -86,12 +86,10 @@
   <script src="/bower_components/angular-animate/angular-animate.js"></script>
   <script src="/bower_components/angular-jwt/dist/angular-jwt.js"></script>
   <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
-  <script src="/bower_components/a0-angular-storage/dist/angular-storage.js"></script>
   <script src="/bower_components/angular-messages/angular-messages.js"></script>
   <script src="/bower_components/ngmap/build/scripts/ng-map.js"></script>
-  <script src="/bower_components/auth0-lock/build/auth0-lock.js"></script>
-  <script src="/bower_components/auth0.js/build/auth0.js"></script>
-  <script src="/bower_components/auth0-angular/build/auth0-angular.js"></script>
+  <script src="/bower_components/stormpath-sdk-angularjs/dist/stormpath-sdk-angularjs.min.js"></script>
+  <script src="/bower_components/stormpath-sdk-angularjs/dist/stormpath-sdk-angularjs.tpls.min.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -119,6 +117,8 @@
 
   
   <script src="scripts/modules/nav/navController.js"></script>
+
+  <script src="scripts/modules/login/loginController.js"></script>
 
   <script src="scripts/directives/compareToDirective.js"></script>
   <script src="scripts/filters/booleanFilter.js"></script>

@@ -3,8 +3,8 @@
         .module('LicentaWeb.Controllers')
         .controller('homeController', controller);
 
-    controller.$inject = ['$scope', 'auth', 'store', 'geolocation', 'NgMap', 'homeService', '$uibModal'];
-    function controller($scope, auth, store, geolocation, NgMap, homeService, $uibModal) {
+    controller.$inject = ['$scope', 'geolocation', 'NgMap', 'homeService', '$uibModal'];
+    function controller($scope, geolocation, NgMap, homeService, $uibModal) {
         var vm = this;
         vm.resultTypes = ['atm', 'bank', 'bar', 'beauty_salon', 'book_store', 'bus_Station', 'cafe',
             'campground', 'car_dealer', 'car_rental', 'car_repair', 'car_wash', 'casino', 'city_hall',
@@ -155,10 +155,6 @@
             } else {
                 console.log('No place was found');
             }
-        };
-
-        vm.login = () => {
-            auth.signin();
         };
 
         vm.search = () => {

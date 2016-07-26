@@ -15,11 +15,9 @@
     "angular-animate": "^1.5.7",
     "angular-jwt": "^0.0.9",
     "angular-cookies": "^1.5.7",
-    "a0-angular-storage": "^0.0.15",
     "angular-messages": "^1.5.7",
     "ngmap": "^1.17.3",
-    "auth0-angular": "^4.2.3",
-    "auth0-lock": "~9.0.0"
+    "stormpath-sdk-angularjs": "^1.0.0"
   },
   "overrides": {
     "bootstrap-sass": {
