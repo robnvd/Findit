@@ -17,10 +17,17 @@
                     controller: 'homeController',
                     controllerAs: 'vm'
                 })
+                //TODO make abstract account state
                 .state('login', {
                     url: '/login',
                     templateUrl: 'templates/login/login.html',
                     controller: 'loginController',
+                    controllerAs: 'vm'
+                })
+                .state('signup', {
+                    url: '/signup',
+                    templateUrl: 'templates/login/signup.html',
+                    controller: 'signupController',
                     controllerAs: 'vm'
                 })
                 .state('bookmarks', {
@@ -55,6 +62,9 @@
         'stormpath',
         'stormpath.templates'
     ])
+        .config(['STORMPATH_CONFIG', (STORMPATH_CONFIG) => {
+            STORMPATH_CONFIG.ENDPOINT_PREFIX = "http://localhost:3000"
+        }])
         .run(['$stormpath', ($stormpath) => {
             $stormpath.uiRouter({
                 loginState: 'login',
