@@ -1,20 +1,11 @@
 (function () {
     angular
-        .module('LicentaWeb.Controllers')
+        .module('Findit.Home')
         .controller('homeController', controller);
 
-    controller.$inject = ['$scope', 'geolocation', 'NgMap', 'homeService', '$uibModal'];
-    function controller($scope, geolocation, NgMap, homeService, $uibModal) {
+    controller.$inject = ['$scope', '$geolocation', 'NgMap', 'homeService', '$uibModal', 'searchResultTypes'];
+    function controller($scope, $geolocation, NgMap, homeService, $uibModal, searchResultTypes) {
         var vm = this;
-        vm.resultTypes = ['atm', 'bank', 'bar', 'beauty_salon', 'book_store', 'bus_Station', 'cafe',
-            'campground', 'car_dealer', 'car_rental', 'car_repair', 'car_wash', 'casino', 'city_hall',
-            'clothing_store', 'convenience_store', 'dentist', 'department_store', 'doctor', 'electrician',
-            'electronics_store', 'fire_station', 'florist', 'furniture_store', 'gas_station', 'gym',
-            'hair_care', 'hardware_store', 'hospital', 'jewelry_store', 'laundry', 'library', 'liquor_store',
-            'meal_delivery', 'meal_takeaway', 'movie_theater', 'night_club', 'park', 'parking', 'pet_store',
-            'pharmacy', 'police', 'post_office', 'restaurant', 'school', 'shoe_store', 'shopping_mall', 'stadium',
-            'store', 'subway_station', 'train_station', 'university', 'zoo'
-        ];
 
         vm.searchData = {
             location: 'near',
@@ -23,7 +14,7 @@
 
         vm.locationChanged = (location) => {
             if (location === 'near') {
-                geolocation.getLocation().then((data) => {
+                $geolocation.getCurrentPosition({timeout: 6000}).then((data) => {
                     if (vm.changeMapCenterWithMarker) {
                         vm.changeMapCenterWithMarker(data.coords.latitude, data.coords.longitude);
                         vm.searchNearbyPlaces();
@@ -61,7 +52,7 @@
                 vm.placesService.nearbySearch({
                     location: vm.map.getCenter(),
                     radius: vm.searchData.radius,
-                    types: vm.resultTypes
+                    types: searchResultTypes
                 }, (results, status) => {
                     if (status === google.maps.places.PlacesServiceStatus.OK) {
                         const center = vm.map.getCenter();
@@ -139,7 +130,7 @@
 
         });
 
-        vm.types = "['geocode', 'establishment', 'address']";
+        vm.types = '[\'geocode\', \'establishment\', \'address\']';
 
         vm.remoteLocationChanged = function () {
             console.log(vm.searchData.remoteLocation);

@@ -12,7 +12,7 @@
                         <label for="place" class="control-label">Place</label>
                         <input type="text" class="form-control" name="place" id="place" placeholder="McDonald's" required ng-model="vm.searchData.place" />
                         <div ng-messages="searchForm.place.$error" ng-show="searchForm.place.$dirty">
-                            <div ng-messages-include="templates/error-messages.html"></div>
+                            <div ng-messages-include="templates/core/error-messages.html"></div>
                         </div>
                     </div>
                     <div class="form-group" ng-class="{ 'has-error': searchForm.radius.$invalid && searchForm.radius.$dirty }">
@@ -20,7 +20,7 @@
                         <input type="number" class="form-control" name="radius" id="radius" ng-model="vm.searchData.radius" placeholder="700 meters"
                             required>
                         <div ng-messages="searchForm.radius.$error" ng-show="searchForm.radius.$dirty">
-                            <div ng-messages-include="templates/error-messages.html"></div>
+                            <div ng-messages-include="templates/core/error-messages.html"></div>
                         </div>
                     </div>
                     <div class="form-group">

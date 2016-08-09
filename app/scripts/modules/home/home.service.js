@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('LicentaWeb.Services')
+        .module('Findit.Home')
         .service('homeService', service);
 
     service.$inject = ['$http'];

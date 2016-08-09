@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('LicentaWeb.Controllers')
+        .module('Findit.Home')
         .controller('placeController', controller);
 
     controller.$inject = ['place', 'placesService', '$scope'];

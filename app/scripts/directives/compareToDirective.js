@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('LicentaWeb.Directives')
+        .module('Findit.Core')
         .directive('compareTo', directive);
 
     directive.$inject = [];

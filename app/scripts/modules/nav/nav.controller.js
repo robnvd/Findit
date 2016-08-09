@@ -1,6 +1,6 @@
 (function () {
     angular
-        .module('LicentaWeb.Controllers')
+        .module('Findit.Nav')
         .controller('navController', controller);
 
     controller.$inject = ['$location'];

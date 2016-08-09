@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('LicentaWeb.Filters')
+        .module('Findit.Core')
         .filter('boolean', filter);
 
     function filter() {

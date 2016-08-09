@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en" ng-app="LicentaWeb">
+<html class="no-js" lang="en" ng-app="Findit">
 
 <head>
   <meta charset="utf-8">
@@ -12,6 +12,7 @@
 
   <!-- build:css styles/vendor.css -->
   <!-- bower:css -->
+  <link rel="stylesheet" href="/bower_components/toastr/toastr.css" />
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -28,34 +29,8 @@
   <!--[if lt IE 10]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-  <nav class="navbar navbar-default" ng-controller="navController as vm">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-        <a class="navbar-brand" href="#">Findit</a>
-      </div>
+  <ng-include src="'templates/core/navbar.html'"></ng-include>
 
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown" if-user>
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome Gigel <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li ng-class="{active: vm.isActive('/bookmarks')}"><a href="#">Bookmarks</a></li>
-              <li ng-class="{active: vm.isActive('/reviews')}"><a href="#">Your reviews & ratings</a></li>
-            </ul>
-          </li>
-          <li if-user><a href="#" sp-logot>Log out</a></li>
-          <li if-not-user><a href="#" ui-sref="login">Log in</a></li>
-          <li if-not-user><a href="#" ui-sref="signup">Sign up</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
   <!--<div class="container">-->
   <ui-view>
     Loading...
@@ -81,7 +56,6 @@
   <!-- bower:js -->
   <script src="/bower_components/jquery/dist/jquery.js"></script>
   <script src="/bower_components/angular/angular.js"></script>
-  <script src="/bower_components/angularjs-geolocation/src/geolocation.js"></script>
   <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="/bower_components/angular-animate/angular-animate.js"></script>
@@ -89,8 +63,12 @@
   <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
   <script src="/bower_components/angular-messages/angular-messages.js"></script>
   <script src="/bower_components/ngmap/build/scripts/ng-map.js"></script>
-  <script src="/bower_components/stormpath-sdk-angularjs/dist/stormpath-sdk-angularjs.js"></script>
-  <script src="/bower_components/stormpath-sdk-angularjs/dist/stormpath-sdk-angularjs.tpls.js"></script>
+  <script src="/bower_components/stormpath-sdk-angularjs/dist/stormpath-sdk-angularjs.min.js"></script>
+  <script src="/bower_components/stormpath-sdk-angularjs/dist/stormpath-sdk-angularjs.tpls.min.js"></script>
+  <script src="/bower_components/toastr/toastr.js"></script>
+  <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="/bower_components/moment/moment.js"></script>
+  <script src="/bower_components/ngGeolocation/ngGeolocation.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -110,21 +88,38 @@
   <!-- endbuild -->
 
   <!-- build:js scripts/main.js -->
-  <script src="scripts/app.js"></script>
+  <script src="scripts/modules/blocks/router/router.module.js"></script>
+  <script src="scripts/modules/blocks/router/router-helper.provider.js"></script>
+  <script src="scripts/modules/blocks/exception/exception.module.js"></script>
+  <script src="scripts/modules/blocks/exception/exception.js"></script>
+  <script src="scripts/modules/blocks/exception/exception-handler.provider.js"></script>
+  <script src="scripts/modules/blocks/logger/logger.module.js"></script>
+  <script src="scripts/modules/blocks/logger/logger.js"></script>
 
-  <script src="scripts/modules/home/homeController.js"></script>
-  <script src="scripts/modules/home/placeController.js"></script>
-  <script src="scripts/modules/home/homeService.js"></script>
+  <script src="scripts/modules/core/core.module.js"></script>
+  <script src="scripts/modules/core/config.js"></script>
+  <script src="scripts/modules/core/core.constants.js"></script>
+  <script src="scripts/modules/core/core.route.js"></script>
 
-  
-  <script src="scripts/modules/nav/navController.js"></script>
+  <script src="scripts/modules/login/login.module.js"></script>
+  <script src="scripts/modules/login/login.controller.js"></script>
+  <script src="scripts/modules/login/login.route.js"></script>
+  <script src="scripts/modules/login/signup.controller.js"></script>
 
-  <script src="scripts/modules/login/loginController.js"></script>
-  <script src="scripts/modules/login/signupController.js"></script>
+  <script src="scripts/modules/home/home.module.js"></script>
+  <script src="scripts/modules/home/home.constants.js"></script>
+  <script src="scripts/modules/home/home.controller.js"></script>
+  <script src="scripts/modules/home/home.route.js"></script>
+  <script src="scripts/modules/home/home.service.js"></script>
+  <script src="scripts/modules/home/place.controller.js"></script>
+
+  <script src="scripts/modules/nav/nav.module.js"></script>
+  <script src="scripts/modules/nav/nav.controller.js"></script>
 
   <script src="scripts/directives/compareToDirective.js"></script>
   <script src="scripts/filters/booleanFilter.js"></script>
-  <!-- endbuild -->
+
+  <script src="scripts/app.js"></script>
 </body>
 
 </html>
