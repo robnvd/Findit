@@ -1,7 +1,6 @@
 (function () {
     'use strict';
 
-    angular.module('Findit.Home', [
-        'Findit.Core'
-    ]);
+    angular.module('Findit.Home', ['Findit.Core']);
+
 })();

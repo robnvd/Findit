@@ -6,7 +6,9 @@
   var config = {
     appErrorPrefix: '[Findit Error] ',
     appTitle: 'Findit',
-    urlPrefix: 'http://localhost:3000'
+    urlPrefix: 'http://localhost:3000',
+    localStorageType: 'sessionStorage',
+    localStoragePrefix: 'Findit.'
   };
   core.value('config', config);
 
@@ -23,6 +25,15 @@
   
   function authConfig(STORMPATH_CONFIG) {
     STORMPATH_CONFIG.ENDPOINT_PREFIX = config.urlPrefix;
+  }
+
+  core.config(localStorageConfig);
+  localStorageConfig.$inject = ['localStorageServiceProvider'];
+
+  function localStorageConfig(localStorageServiceProvider) {
+    localStorageServiceProvider.setStorageType(config.localStorageType);
+    localStorageServiceProvider.setPrefix(config.localStoragePrefix);
+    localStorageServiceProvider.setNotify(false, false);
   }
 
   core.config(configure);

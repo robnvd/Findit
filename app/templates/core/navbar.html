@@ -13,15 +13,15 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown" if-user>
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome Gigel <span class="caret"></span></a>
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome {{vm.userData.username}} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li ng-class="{active: vm.isActive('/bookmarks')}"><a ui-sref="bookmarks">Bookmarks</a></li>
-                        <li ng-class="{active: vm.isActive('/reviews')}"><a ui-sref="reviews">Your reviews & ratings</a></li>
+                        <li ui-sref-active="active"><a ui-sref="bookmarks">Bookmarks</a></li>
+                        <li ui-sref-active="active"><a ui-sref="reviews">Your reviews & ratings</a></li>
                     </ul>
                 </li>
                 <li if-user><a href="" sp-logout>Log out</a></li>
-                <li if-not-user><a href="" ui-sref="login">Log in</a></li>
-                <li if-not-user><a href="" ui-sref="signup">Sign up</a></li>
+                <li if-not-user ui-sref-active="active"><a href="" ui-sref="login">Log in</a></li>
+                <li if-not-user ui-sref-active="active"><a href="" ui-sref="signup">Sign up</a></li>
             </ul>
         </div>
     </div>

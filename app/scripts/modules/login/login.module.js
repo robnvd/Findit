@@ -1,22 +1,20 @@
 (function () {
     'use strict';
 
-    angular.module('Findit.Login', [
-        'Findit.Core'
-    ]);
+    angular
+        .module('Findit.Login', ['Findit.Core'])
+        .run(appRun);
 
-    appRun.$inject = ['$rootScope', '$state', 'logger'];
+    appRun.$inject = ['$rootScope', '$state', 'logger', 'localStorageService'];
 
-    function appRun($rootScope, $state, logger) {
+    function appRun($rootScope, $state, logger, localStorageService) {
         $rootScope.$on('$sessionEnd', function () {
             logger.success('Session ended')
             $state.transitionTo('login');
         });
 
-        $rootScope.$on('$authenticated', function (event, response) {
-            alert();
-            console.log(event);
-            console.log(response);
+        $rootScope.$on('$authenticated', function (event, userData) {
+            localStorageService.set('userData', userData);
         });
     }
 })();
