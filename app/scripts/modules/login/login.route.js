@@ -23,6 +23,11 @@
                     controllerAs: 'vm',
                     sp: {
                         authenticate: false
+                    },
+                    resolve: {
+                        'pageTitle' : ['$rootScope', ($rootScope) => {
+                            $rootScope.pageTitle = "Login";
+                        }]
                     }
                 }
             },
@@ -35,6 +40,11 @@
                     controllerAs: 'vm',
                     sp: {
                         authenticate: false
+                    },
+                    resolve: {
+                        'pageTitle' : ['$rootScope', ($rootScope) => {
+                            $rootScope.pageTitle = "Signup";
+                        }]
                     }
                 }
             },

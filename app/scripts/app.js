@@ -4,7 +4,9 @@
         'Findit.Core',
         'Findit.Home',
         'Findit.Login',
-        'Findit.Nav'
+        'Findit.Nav',
+        'Findit.Reviews',
+        'Findit.Bookmarks'
     ]);
     
 })();

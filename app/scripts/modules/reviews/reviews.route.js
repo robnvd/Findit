@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('Findit.Home')
+        .module('Findit.Reviews')
         .run(appRun);
 
     appRun.$inject = ['routerHelper'];
@@ -14,18 +14,18 @@
     function getStates() {
         return [
             {
-                state: 'home',
+                state: 'reviews',
                 config: {
-                    url: '/home',
-                    templateUrl: 'templates/home/home.html',
-                    controller: 'homeController',
+                    url: '/reviews',
+                    templateUrl: 'templates/reviews/reviews.html',
+                    controller: 'reviewsController',
                     controllerAs: 'vm',
                     sp: {
-                        authenticate: false
+                        authenticate: true
                     },
                     resolve: {
                         'pageTitle' : ['$rootScope', ($rootScope) => {
-                            $rootScope.pageTitle = "Home";
+                            $rootScope.pageTitle = "Reviews";
                         }]
                     }
                 }

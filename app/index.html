@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="description" content="FindIt">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>FindIt</title>
+  <title>{{ pageTitle || 'Home' }} - FindIt</title>
 
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <!-- Place favicon.ico in the root directory -->
@@ -29,7 +29,7 @@
   <!--[if lt IE 10]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-  <ng-include src="'templates/core/navbar.html'"></ng-include>
+  <ng-include src="'templates/nav/navbar.html'"></ng-include>
 
   <!--<div class="container">-->
   <ui-view>
@@ -102,6 +102,10 @@
   <script src="scripts/modules/core/core.constants.js"></script>
   <script src="scripts/modules/core/core.route.js"></script>
 
+  <script src="scripts/modules/bookmarks/bookmarks.module.js"></script>
+  <script src="scripts/modules/bookmarks/bookmarks.controller.js"></script>
+  <script src="scripts/modules/bookmarks/bookmarks.route.js"></script>
+
   <script src="scripts/modules/login/login.module.js"></script>
   <script src="scripts/modules/login/login.controller.js"></script>
   <script src="scripts/modules/login/login.route.js"></script>
@@ -116,6 +120,10 @@
 
   <script src="scripts/modules/nav/nav.module.js"></script>
   <script src="scripts/modules/nav/nav.controller.js"></script>
+
+  <script src="scripts/modules/reviews/reviews.module.js"></script>
+  <script src="scripts/modules/reviews/reviews.controller.js"></script>
+  <script src="scripts/modules/reviews/reviews.route.js"></script>
 
   <script src="scripts/services/user.service.js"></script>
   <script src="scripts/services/storage.service.js"></script>
