@@ -26,4 +26,34 @@ ng-map {
 .home-container {
     margin: 0 10px 0 10px;
 }
-
+.fit-vid {
+    opacity: 1;
+    -webkit-transform: translateY(100px);
+    -ms-transform: translateY(100px);
+    transform: translateY(100px);
+    -webkit-transition: all 200ms ease-in-out 100ms;
+    transition: all 200ms ease-in-out 100ms
+}
+.fit-vid iframe {
+    width: 100%
+}
+.fit-vid.is-loaded {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0)
+}
+.vid {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+    margin: 0;
+}
+.vid iframe {
+    position: absolute;
+    top: -10%;
+    left: 0;
+    width: 100%;
+    height: 100%
+}

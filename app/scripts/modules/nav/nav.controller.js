@@ -14,7 +14,6 @@
         ////////////////
 
         function activate() {
-            debugger;
             vm.userData = storage.get('userData');
         }
     }

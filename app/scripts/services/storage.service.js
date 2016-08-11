@@ -7,7 +7,6 @@
 
     storage.$inject = ['localStorageService'];
     function storage(localStorageService) {
-        debugger;
         this.get = get;
         this.set = set;
 
