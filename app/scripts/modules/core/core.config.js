@@ -25,6 +25,7 @@
   
   function authConfig(STORMPATH_CONFIG) {
     STORMPATH_CONFIG.ENDPOINT_PREFIX = config.urlPrefix;
+    STORMPATH_CONFIG.FORM_CONTENT_TYPE = 'application/json';
   }
 
   core.config(localStorageConfig);
