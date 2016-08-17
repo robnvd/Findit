@@ -1,11 +1,11 @@
-(function() {
+(function () {
   'use strict';
 
   angular
     .module('Findit.Core')
     .run(appRun);
 
-  
+
   appRun.$inject = ['routerHelper', '$stormpath'];
   function appRun(routerHelper, $stormpath) {
     var otherwise = '/404';
@@ -23,8 +23,7 @@
         state: '404',
         config: {
           url: '/404',
-          templateUrl: 'templates/core/404.html',
-          title: '404'
+          templateUrl: 'templates/core/404.html'
         }
       }
     ];

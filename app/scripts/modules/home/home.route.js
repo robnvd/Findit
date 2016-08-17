@@ -16,17 +16,12 @@
             {
                 state: 'home',
                 config: {
-                    url: '/home',
+                    url: '/',
                     templateUrl: 'templates/home/home.html',
                     controller: 'homeController',
                     controllerAs: 'vm',
                     sp: {
                         authenticate: false
-                    },
-                    resolve: {
-                        'pageTitle' : ['$rootScope', ($rootScope) => {
-                            $rootScope.pageTitle = "Home";
-                        }]
                     }
                 }
             }

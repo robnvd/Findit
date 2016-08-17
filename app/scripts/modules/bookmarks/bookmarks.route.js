@@ -22,11 +22,6 @@
                     controllerAs: 'vm',
                     sp: {
                         authenticate: true
-                    },
-                    resolve: {
-                        'pageTitle' : ['$rootScope', ($rootScope) => {
-                            $rootScope.pageTitle = "Bookmarks";
-                        }]
                     }
                 }
             }

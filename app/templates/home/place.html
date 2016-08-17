@@ -10,7 +10,7 @@
         <p>Place is closed: {{vm.place.permanently_closed | boolean}}</p>
         <p>Expensivness: {{vm.place.price_level}}</p>
         <p>Rating: {{vm.place.rating}}</p>
-        <p>Reviews: <span ng-repeat="review in vm.place.reviews">{{review | json}}</span></p>
+        <!--<p>Reviews: <span ng-repeat="review in vm.place.reviews">{{review | json}}</span></p>-->
         <p>Types: <span ng-repeat="type in vm.place.types"> {{type}} </span></p>
         <p>Google page: <a href="{{vm.place.url}}">ClickHere</a></p>
         <p>Webpage: <a href="{{vm.place.url}}">Webpage</a></p>
@@ -18,6 +18,7 @@
         <p>Photos: <span ng-repeat="photo in vm.place.photos"> <img ng-src="{{photo.getUrl({maxWidth: photo.width, maxHeigth: photo.height})}}" width="100" height="100"></img> </span></p>
 
         <!--<p>{{vm.place | json }}</p>-->
+        <p><pre>{{vm.place.customReviews | json }}</pre></p>
 
     </div>
     <div class="modal-footer">
