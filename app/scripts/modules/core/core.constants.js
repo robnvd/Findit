@@ -6,5 +6,6 @@
     .constant('toastr', toastr)
     .constant('baseUrl', 'http://localhost:3000')
     .constant('apiUrl', 'http://localhost:3000/api/')
+    .constant('dateTimeFormat', 'DD MMM Y - HH:mm')
     .constant('moment', moment);
 })();

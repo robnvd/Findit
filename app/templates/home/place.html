@@ -1,7 +1,8 @@
 <div class="modal-content">
     <div class="modal-header">
         <button type="button" class="close" ng-click="$close()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h2 class="modal-title"><img ng-src="{{vm.place.icon}}" width="15" height="15"> {{vm.place.name}} </img></h2>
+        <h2 class="modal-title"><img ng-src="{{vm.place.icon}}" width="15" height="15"> {{vm.place.name}} </img>
+        </h2>
     </div>
     <div class="modal-body">
         <p>Address: {{vm.place.formatted_address ? vm.place.formatted_address : vm.place.vicinity}}</p>
@@ -10,20 +11,40 @@
         <p>Place is closed: {{vm.place.permanently_closed | boolean}}</p>
         <p>Expensivness: {{vm.place.price_level}}</p>
         <p>Rating: {{vm.place.rating}}</p>
-        <!--<p>Reviews: <span ng-repeat="review in vm.place.reviews">{{review | json}}</span></p>-->
+        <!--<p><pre>{{vm.place.reviews | json}}</pre></p>
+        <p>Reviews: <span ng-repeat="review in vm.place.reviews"><pre>{{review | json}}</pre></span></p>-->
         <p>Types: <span ng-repeat="type in vm.place.types"> {{type}} </span></p>
         <p>Google page: <a href="{{vm.place.url}}">ClickHere</a></p>
         <p>Webpage: <a href="{{vm.place.url}}">Webpage</a></p>
         <p>Opening hours (Open Now: {{vm.place.opening_hours.open_now | boolean}}): <span ng-repeat="hour in vm.place.opening_hours.weekday_text">{{hour}}</span></p>
-        <p>Photos: <span ng-repeat="photo in vm.place.photos"> <img ng-src="{{photo.getUrl({maxWidth: photo.width, maxHeigth: photo.height})}}" width="100" height="100"></img> </span></p>
-
+        <!--<p>Photos: <span ng-repeat="photo in vm.place.photos"> <img ng-src="{{photo.getUrl({maxWidth: photo.width, maxHeigth: photo.height})}}" width="100" height="100"></img> </span></p>-->
+        <!--<slick class="slider" settings="vm.slickConfig" dots="true">
+            <div ng-repeat="photo in vm.place.photos">
+                <img ng-src="{{photo.getUrl({maxWidth: photo.width, maxHeigth: photo.height})}}" width="100" height="100"></img>
+            </div>
+        </slick>-->
+        <slick slides-to-show=3 slides-to-scroll=3>
+            <div ng-repeat="photo in vm.place.photos">
+                <!--<img ng-src="{{photo.getUrl({maxWidth: photo.width, maxHeigth: photo.height})}}" width="100" height="100"></img>-->
+                <h3>{{$index}}</h3>
+            </div>
+            <!--<div ng-repeat="i in [1,2,3,4,5,6,7,8,9,10]"><h3>{{ i }}</h3></div>-->
+        </slick>
         <!--<p>{{vm.place | json }}</p>-->
-        <p><pre>{{vm.place.customReviews | json }}</pre></p>
+        <slick slides-to-show=3 slides-to-scroll=3>
+            <div ng-repeat="review in vm.place.customReviews ">
+                <review author="review.createdBy " created-on="review.createdOn " review-text="review.reviewText " rating="review.rating "></review>
+            </div>
+            <div ng-repeat="review in vm.place.reviews ">
+                <review author="review.author_name " created-on="review.time " review-text="review.text " rating="review.rating "></review>
+            </div>
+        </slick>
 
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary" ng-click="$close()">Close</button>
-        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+    <div class="modal-footer ">
+        <button type="button" class="btn btn-success" ng-click="addReview()">Add review</button>
+        <button type="button" class="btn btn-primary" ng-click="$close() ">Close</button>
+        <!--<button type="button " class="btn btn-primary ">Save changes</button>-->
     </div>
 </div>
 <!-- /.modal-content -->

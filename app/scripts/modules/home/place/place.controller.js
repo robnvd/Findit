@@ -16,6 +16,13 @@
             //TODO Handle error
         });
 
+        vm.slickConfig = {
+            dots: true,
+            autoplay: true,
+            initialSlide: 3,
+            infinite: true,
+        };
+
         function getDetailsCallback(place, status) {
             $scope.$apply(() => {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {

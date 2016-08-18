@@ -12,9 +12,13 @@
             radius: 700
         };
 
+        function getCurrentPosition() {
+            return $geolocation.getCurrentPosition({ timeout: 6000 });
+        }
+
         vm.locationChanged = (location) => {
             if (location === 'near') {
-                $geolocation.getCurrentPosition({timeout: 6000}).then((data) => {
+                getCurrentPosition().then((data) => {
                     if (vm.changeMapCenterWithMarker) {
                         vm.changeMapCenterWithMarker(data.coords.latitude, data.coords.longitude);
                         vm.searchNearbyPlaces();

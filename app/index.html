@@ -13,6 +13,8 @@
   <!-- build:css styles/vendor.css -->
   <!-- bower:css -->
   <link rel="stylesheet" href="/bower_components/toastr/toastr.css" />
+  <link rel="stylesheet" href="/bower_components/slick-carousel/slick/slick.css" />
+  <link rel="stylesheet" href="/bower_components/slick-carousel/slick/slick-theme.css" />
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -70,6 +72,8 @@
   <script src="/bower_components/moment/moment.js"></script>
   <script src="/bower_components/ngGeolocation/ngGeolocation.js"></script>
   <script src="/bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+  <script src="/bower_components/slick-carousel/slick/slick.js"></script>
+  <script src="/bower_components/angular-slick-carousel/dist/angular-slick.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -113,10 +117,12 @@
 
   <script src="scripts/modules/home/home.module.js"></script>
   <script src="scripts/modules/home/home.constants.js"></script>
-  <script src="scripts/modules/home/home.controller.js"></script>
   <script src="scripts/modules/home/home.route.js"></script>
-  <script src="scripts/modules/home/home.service.js"></script>
-  <script src="scripts/modules/home/place.controller.js"></script>
+  <script src="scripts/modules/home/home/home.controller.js"></script>
+  <script src="scripts/modules/home/home/home.service.js"></script>
+  <script src="scripts/modules/home/place/place.controller.js"></script>
+  <script src="scripts/modules/home/place/review.directive.js"></script>
+  <script src="scripts/modules/home/place/starRating.directive.js"></script>
 
   <script src="scripts/modules/nav/nav.module.js"></script>
   <script src="scripts/modules/nav/nav.controller.js"></script>
@@ -131,7 +137,8 @@
 
   <script src="scripts/directives/compareToDirective.js"></script>
 
-  <script src="scripts/filters/booleanFilter.js"></script>
+  <script src="scripts/filters/boolean.filter.js"></script>
+  <script src="scripts/filters/dateTime.filter.js"></script>
 
   <script src="scripts/app.js"></script>
 </body>
