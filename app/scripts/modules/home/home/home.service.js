@@ -5,9 +5,10 @@
         .module('Findit.Home')
         .service('homeService', service);
 
-    service.$inject = ['$http'];
-    function service($http) {
+    service.$inject = ['$http', '$geolocation'];
+    function service($http, $geolocation) {
         this.createMarker = createMarker;
+        this.getCurrentLocation = getCurrentLocation;
 
         function createMarker(map, place, clickEvent) {
             var placeLoc = place.geometry.location;
@@ -17,6 +18,10 @@
             });
             if(clickEvent) google.maps.event.addListener(marker, 'click', () => clickEvent(place));
             return marker;
+        }
+
+        function getCurrentLocation(){
+            return $geolocation.getCurrentPosition({ timeout: 6000 });
         }
     }
 })();

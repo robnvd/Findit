@@ -3,8 +3,8 @@
         .module('Findit.Home')
         .controller('homeController', controller);
 
-    controller.$inject = ['$scope', '$geolocation', 'NgMap', 'homeService', '$uibModal', 'searchResultTypes'];
-    function controller($scope, $geolocation, NgMap, homeService, $uibModal, searchResultTypes) {
+    controller.$inject = ['$scope', 'NgMap', 'homeService', '$uibModal', 'searchResultTypes'];
+    function controller($scope, NgMap, homeService, $uibModal, searchResultTypes) {
         var vm = this;
 
         vm.searchData = {
@@ -12,13 +12,9 @@
             radius: 700
         };
 
-        function getCurrentPosition() {
-            return $geolocation.getCurrentPosition({ timeout: 6000 });
-        }
-
         vm.locationChanged = (location) => {
             if (location === 'near') {
-                getCurrentPosition().then((data) => {
+                homeService.getCurrentLocation().then((data) => {
                     if (vm.changeMapCenterWithMarker) {
                         vm.changeMapCenterWithMarker(data.coords.latitude, data.coords.longitude);
                         vm.searchNearbyPlaces();
@@ -43,6 +39,7 @@
                 fillOpacity: 0.2,
                 map: map
             });
+            //TODO make center marker green and draggable
             vm.centerMarker = new google.maps.Marker({ position: map.getCenter(), map: map });
 
             $scope.$watch(() => vm.searchData.radius, (newVal) => {
@@ -99,15 +96,16 @@
                     controllerAs: 'vm',
                     resolve: {
                         place: () => place,
-                        placesService: () => vm.placesService
+                        googlePlacesService: () => vm.placesService
                     }
                 });
             };
 
             vm.clearAllMarkers = () => {
-                for (let marker of vm.markers) {
+                angular.forEach(vm.markers, (marker) => {
                     marker.setMap(null);
-                }
+                });
+                //TODO delete from memory
                 vm.markers = [];
             };
 
@@ -134,7 +132,7 @@
 
         });
 
-        vm.types = '[\'geocode\', \'establishment\', \'address\']';
+        //vm.types = '[\'geocode\', \'establishment\', \'address\']';
 
         vm.remoteLocationChanged = function () {
             console.log(vm.searchData.remoteLocation);
