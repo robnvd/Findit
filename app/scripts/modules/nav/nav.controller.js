@@ -21,8 +21,8 @@
             if (!$user.currentUser) {
                 $user.get().then((user) => {
                     vm.userData = user;
-                }).catch((error) => {
-                    logger.error('User data retrieval failed', error, 'Fail');
+                }, (error) => {
+                    logger.error(error);
                 });
             } else {
                 vm.userData = $user.currentUser;

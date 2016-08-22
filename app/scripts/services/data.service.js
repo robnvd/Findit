@@ -15,7 +15,7 @@
         };
 
         function get(url) {
-            return $http.get(apiUrl + url).catch((error) => { $q.reject(error); });
+            return $http.get(apiUrl + url);
         }
         function post(url, data) { 
             return $http.post(apiUrl + url, data).catch((error) => { $q.reject(error); });
