@@ -1,7 +1,7 @@
 <div class="well">
     <blockquote>
-        <p>{{vm.reviewText}}</p>
         <star-rating ng-model="vm.rating" readonly="true"></star-rating>
+        <p>{{vm.reviewText}}</p>
         <small>{{vm.author}} <cite title="Source Title">@ {{vm.createdOn | dateTime}}</cite></small>
     </blockquote>
 </div>

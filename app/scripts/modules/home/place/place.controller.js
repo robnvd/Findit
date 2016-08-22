@@ -23,9 +23,9 @@
                     vm.place = place;
                     customReviewsPromise.then((result) => {
                         if (result.data) {
-                            // var transformedReviews = turnCustomReviewToGoogleReview(result.data);
-                            // vm.place.reviews.push(...transformedReviews);
-                            vm.place.customReviews = result.data;
+                            var transformedReviews = turnCustomReviewToGoogleReview(result.data);
+                            vm.place.reviews.push(...transformedReviews);
+                            // vm.place.customReviews = result.data;
                         }
                     }).catch((error) => { /*TODO Handle error*/ });
                 }

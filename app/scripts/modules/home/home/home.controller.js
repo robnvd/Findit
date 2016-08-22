@@ -29,16 +29,21 @@
             vm.map = map;
             vm.markers = [];
 
-            vm.radius = new google.maps.Circle({
-                center: map.getCenter(),
-                radius: vm.searchData.radius,
-                strokeColor: '#59C4C5',
-                strokeOpacity: 0.4,
-                strokeWeight: 2,
-                fillColor: '#59C4C5',
-                fillOpacity: 0.2,
-                map: map
-            });
+            if (vm.radius) {
+                vm.radius.setCenter(map.getCenter());
+            } else {
+                vm.radius = new google.maps.Circle({
+                    center: map.getCenter(),
+                    radius: vm.searchData.radius,
+                    strokeColor: '#59C4C5',
+                    strokeOpacity: 0.4,
+                    strokeWeight: 2,
+                    fillColor: '#59C4C5',
+                    fillOpacity: 0.2,
+                    map: map
+                });
+            }
+
             //TODO make center marker green and draggable
             vm.centerMarker = new google.maps.Marker({ position: map.getCenter(), map: map });
 

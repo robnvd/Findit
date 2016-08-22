@@ -22,8 +22,7 @@
     "moment": "^2.14.1",
     "ngGeolocation": "^0.0.8",
     "angular-local-storage": "^0.3.0",
-    "font-awesome": "^4.6.3",
-    "angular-slick-carousel": "^3.1.7"
+    "font-awesome": "^4.6.3"
   },
   "overrides": {
     "bootstrap-sass": {
