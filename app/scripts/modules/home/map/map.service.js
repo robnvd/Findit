@@ -62,7 +62,7 @@
                         }
                     });
                 }
-                
+
                 if (!_radius) {
                     _radius = new google.maps.Circle({
                         center: map.getCenter(),
@@ -100,38 +100,44 @@
 
         //Map Places API
         function getMapPlacesService() {
-            return new google.maps.places.PlacesService(_mapInstace);
+            return getMapInstance().then((map) => {
+                return new google.maps.places.PlacesService(map)
+            });
         }
 
         function searchNearbyPlaces() {
             var deferred = $q.defer();
-            getMapPlacesService().nearbySearch({
-                location: _mapInstace.getCenter(),
-                radius: _radius.getRadius(),
-                types: searchResultTypes
-            }, (results, status) => {
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    deferred.resolve(results);
-                } else {
-                    deferred.reject(status);
-                }
-            });
+            getMapPlacesService().then((service) => {
+                service.nearbySearch({
+                    location: _mapInstace.getCenter(),
+                    radius: _radius.getRadius(),
+                    types: searchResultTypes
+                }, (results, status) => {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        deferred.resolve(results);
+                    } else {
+                        deferred.reject(status);
+                    }
+                });
+            })
             return deferred.promise;
         }
 
         function searchPlacesByText(query) {
             var deferred = $q.defer();
-            getMapPlacesService().textSearch({
-                location: _mapInstace.getCenter(),
-                radius: _radius.getRadius(),
-                query: query
-            }, (results, status) => {
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    deferred.resolve(results);
-                } else {
-                    deferred.reject(status);
-                }
-            });
+            getMapPlacesService().then((service) => {
+                service.textSearch({
+                    location: _mapInstace.getCenter(),
+                    radius: _radius.getRadius(),
+                    query: query
+                }, (results, status) => {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        deferred.resolve(results);
+                    } else {
+                        deferred.reject(status);
+                    }
+                });
+            })
             return deferred.promise;
         }
 
@@ -173,7 +179,8 @@
         function addMarkerToMapForPlace(place, clickEvent) {
             var marker = new google.maps.Marker({
                 map: _mapInstace,
-                position: place.geometry.location
+                position: place.geometry.location,
+                title: place.name
             });
             if (clickEvent) {
                 google.maps.event.addListener(marker, 'click', () => {

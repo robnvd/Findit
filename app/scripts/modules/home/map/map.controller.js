@@ -1,7 +1,7 @@
 (function () {
     angular
         .module('Findit.Home')
-        .controller('homeController', controller);
+        .controller('mapController', controller);
 
     controller.$inject = ['$scope'];
     function controller($scope) {

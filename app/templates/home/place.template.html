@@ -4,8 +4,10 @@
     </h2>
 </div>
 <div class="modal-body" id="modal-body">
-    <span us-spinner spinner-key="place-modal-body"></span>
-    <div class="container-fluid" ng-hide="vm.placeIsLoading">
+    <div class="spinner-container" ng-show="vm.dataIsLoading">
+        <span us-spinner spinner-on="vm.dataIsLoading"></span>
+    </div>
+    <div class="container-fluid" ng-hide="vm.dataIsLoading">
         <p ng-show="vm.place.formatted_address || vm.place.vicinity">Address: {{vm.place.formatted_address ? vm.place.formatted_address : vm.place.vicinity}}</p>
         <p ng-show="vm.place.formatted_phone_number">Phone: {{vm.place.formatted_phone_number}}</p>
         <p ng-show="vm.place.html_attributions.length > 0">Links: <span ng-repeat="attr in vm.place.html_attributions">{{attr}}</span></p>
@@ -16,7 +18,7 @@
         </p>
         <p ng-show="vm.place.types.length > 0">Types: <span ng-repeat="type in vm.place.types"> {{type}} </span></p>
         <p ng-show="vm.place.url">Google page: <a href="{{vm.place.url}}">ClickHere</a></p>
-        <p ng-show="vm.place.url">Webpage: <a href="{{vm.place.url}}">Webpage</a></p>
+        <p ng-show="vm.place.website">Webpage: <a href="{{vm.place.website}}">Webpage</a></p>
         <p ng-show="vm.place.opening_hours.length > 0">Opening hours (Open Now: {{vm.place.opening_hours.open_now | boolean}}): <span ng-repeat="hour in vm.place.opening_hours.weekday_text">{{hour}}</span></p>
         <p ng-show="vm.place.photos.length > 0">
             Photos ({{vm.place.photos.length || 0}}):
@@ -49,12 +51,14 @@
 <div class="modal-footer">
     <div class="row">
         <div class="col-lg-8 text-left">
-            <button type="button" ng-hide="vm.hideBookmark" class="btn btn-danger text-left" ng-click="vm.addToBookmarks()">
-                <i class="fa fa-heart" aria-hidden="true"></i> Add to bookmarks
-            </button>
-            <button type="button" ng-show="vm.hideBookmark" class="btn btn-default text-left" ng-click="vm.removeFromBookmarks()">
-                <i class="fa fa-frown-o" aria-hidden="true"></i> Remove bookmarks
-            </button>
+            <div ng-hide="vm.dataIsLoading">
+                <button type="button" ng-hide="vm.hideBookmark" class="btn btn-danger text-left" ng-click="vm.addToBookmarks()">
+                    <i class="fa fa-heart" aria-hidden="true"></i> Add to bookmarks
+                </button>
+                <button type="button" ng-show="vm.hideBookmark" class="btn btn-default text-left" ng-click="vm.removeFromBookmarks()">
+                    <i class="fa fa-frown-o" aria-hidden="true"></i> Remove bookmarks
+                </button>
+            </div>
         </div>
         <div class="col-lg-4">
             <button type="button" class="btn btn-success" ng-hide="vm.addReviewToggle" ng-click="vm.toggleAddReview()">Add review</button>
@@ -80,7 +84,7 @@
         <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
                 <button type="button" class="btn btn-success" ng-click="vm.saveReview()">Add review</button>
-                <button type="button" class="btn btn-warning" ng-click="vm.toggleAddReview() ">Close</button>
+                <button type="button" class="btn btn-warning" ng-click="vm.toggleAddReview() ">Cancel</button>
             </div>
         </div>
     </fieldset>

@@ -18,13 +18,14 @@
 
         function getGooglePlaceDetails(placeId) {
             const deferred = $q.defer();
-            var service = mapService.getMapPlacesService();
-            service.getDetails({ placeId: placeId }, (place, status) => {
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    deferred.resolve(place);
-                } else {
-                    deferred.reject(status);
-                }
+            mapService.getMapPlacesService().then((service) => {
+                service.getDetails({ placeId: placeId }, (place, status) => {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        deferred.resolve(place);
+                    } else {
+                        deferred.reject(status);
+                    }
+                });
             });
             return deferred.promise;
         }

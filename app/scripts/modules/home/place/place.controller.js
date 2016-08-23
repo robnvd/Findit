@@ -5,12 +5,12 @@
         .module('Findit.Home')
         .controller('placeController', controller);
 
-    controller.$inject = ['place', '$scope', 'placeService', 'logger', 'usSpinnerService'];
-    function controller(place, $scope, placeService, logger, usSpinnerService) {
+    controller.$inject = ['place', '$scope', 'placeService', 'logger'];
+    function controller(place, $scope, placeService, logger) {
         //init
         var vm = this;
 
-        vm.placeIsLoading = true;
+        vm.dataIsLoading = true;
 
         vm.hidePhotos = true;
         vm.hideReviews = true;
@@ -22,6 +22,7 @@
         };
 
         vm.toggleAddReview = () => {
+            _resetReviewForm();
             vm.addReviewToggle = !vm.addReviewToggle;
         };
 
@@ -52,11 +53,10 @@
 
         function _init() {
             placeService.getGooglePlaceDetails(place.place_id)
-                .then((place) => { usSpinnerService.spin('place-modal-body'); return place; }, _handleError)
                 .then(_resolvePlaceDetails, _handleError)
                 .then(_resolvePlaceBookmark, _handleError)
                 .then(_resolveCustomReviews, _handleError)
-                .then(() => { usSpinnerService.stop('place-modal-body'); vm.placeIsLoading = false; });
+                .then(() => { vm.dataIsLoading = false; }, _handleError);
         }
 
         function _resolvePlaceDetails(place) {
@@ -104,10 +104,10 @@
         }
 
         function _resetReviewForm() {
-            vm.addReviewToggle = false;
             vm.newReview = {
                 placeId: place.place_id,
-                rating: 5
+                rating: 5,
+                reviewText: null
             }
         }
 

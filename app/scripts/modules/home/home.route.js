@@ -20,10 +20,10 @@
                     views: {
                         'map': {
                             templateUrl: 'templates/home/map.template.html',
-                            controller: 'homeController',
+                            controller: 'mapController',
                             controllerAs: 'vm',
                         },
-                        'search': {
+                        'sidePanel': {
                             templateUrl: 'templates/home/search.template.html',
                             controller: 'searchController',
                             controllerAs: 'vm',
@@ -31,6 +31,48 @@
                     },
                     sp: {
                         authenticate: false
+                    }
+                }
+            },
+            {
+                state: 'reviews',
+                config: {
+                    url: '/reviews',
+                    views: {
+                        'map': {
+                            templateUrl: 'templates/home/map.template.html',
+                            controller: 'mapController',
+                            controllerAs: 'vm',
+                        },
+                        'sidePanel': {
+                            templateUrl: 'templates/home/reviews.template.html',
+                            controller: 'reviewsController',
+                            controllerAs: 'vm',
+                        }
+                    },
+                    sp: {
+                        authenticate: true
+                    }
+                }
+            },
+            {
+                state: 'bookmarks',
+                config: {
+                    url: '/bookmarks',
+                    views: {
+                        'map': {
+                            templateUrl: 'templates/home/map.template.html',
+                            controller: 'mapController',
+                            controllerAs: 'vm',
+                        },
+                        'sidePanel': {
+                            templateUrl: 'templates/home/bookmarks.template.html',
+                            controller: 'bookmarksController',
+                            controllerAs: 'vm',
+                        }
+                    },
+                    sp: {
+                        authenticate: true
                     }
                 }
             }

@@ -104,3 +104,22 @@ ng-map {
 .ui-view-container {
     display: inline;
 }
+
+.spinner-container {
+    height: 50px;
+    position: relative;
+    max-height: 100%;
+}
+.centered {
+    position: absolute;
+    left:50%;
+    top:50%;
+}
+
+.fill.well {
+    margin-bottom: 0;
+}
+
+.scrollable-div {
+    overflow-y: scroll; 
+}
