@@ -1,7 +1,5 @@
-<div class="well">
-    <blockquote>
-        <star-rating ng-model="vm.rating" readonly="true"></star-rating>
-        <p>{{vm.reviewText}}</p>
-        <small>{{vm.author}} <cite title="Source Title">@ {{vm.createdOn | dateTime}}</cite></small>
-    </blockquote>
-</div>
+<blockquote>
+    <star-rating ng-model="vm.rating" readonly="true"></star-rating>
+    <p>{{vm.reviewText}}</p>
+    <small>{{vm.author}} <cite title="Source Title">@ {{vm.createdOn | dateTime}}</cite></small>
+</blockquote>

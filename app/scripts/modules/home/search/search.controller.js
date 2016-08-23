@@ -1,10 +1,10 @@
 (function () {
     angular
         .module('Findit.Home')
-        .controller('homeController', controller);
+        .controller('searchController', controller);
 
-    controller.$inject = ['$scope', 'mapService', 'homeService', '$uibModal'];
-    function controller($scope, mapService, homeService, $uibModal) {
+    controller.$inject = ['$scope', 'mapService', '$uibModal'];
+    function controller($scope, mapService, $uibModal) {
         var vm = this;
 
         vm.searchData = {
@@ -14,7 +14,7 @@
 
         mapService.init({
             radius: vm.searchData.radius,
-            centerMarkerPositionChangedCallback: _centerMarkerPositionChangedCallback
+            centerMarkerDragEndedCallback: _centerMarkerDragEndedCallback
         }).then(() => {
             $scope.$watch(() => vm.searchData.radius, (newVal) => {
                 mapService.setRadiusSize(newVal);
@@ -22,7 +22,7 @@
 
             vm.locationChanged = (location) => {
                 if (location === 'near') {
-                    homeService.getCurrentLocation().then((data) => {
+                    mapService.getCurrentLocation().then((data) => {
                         mapService.setMapCenter(data.coords.latitude, data.coords.longitude);
                         mapService.searchNearbyPlaces().then(_resolvePlaces, _handleErrors);
                         vm.searchData.remoteLocation = null;
@@ -55,9 +55,10 @@
             console.log(err);
         });
 
-        function _centerMarkerPositionChangedCallback(centerMarker) {
+        function _centerMarkerDragEndedCallback(centerMarker) {
             const center = centerMarker.getPosition();
             mapService.setMapCenterWithoutCenterMarker(center);
+            mapService.clearAllMarkers();
             mapService.searchNearbyPlaces().then(_resolvePlaces, _handleErrors);
         }
 
@@ -74,7 +75,7 @@
         function _markerClickCallback(place) {
             $uibModal.open({
                 backdrop: 'static',
-                templateUrl: 'templates/home/place.html',
+                templateUrl: 'templates/home/place.template.html',
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
                 size: 'lg',

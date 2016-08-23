@@ -84,5 +84,23 @@ ng-map {
 
 .carousel-control {
     opacity: 0.2;
-    width: 10%;
+    width: 5%;
+}
+
+.carousel-indicators {
+    bottom: 0px;
+}
+
+.carousel-indicators li {
+    border: 1px solid black;
+}
+
+.add-review-container {
+    border-top: 1px solid #e5e5e5;
+    padding: 20px;
+    text-align: right;
+}
+
+.ui-view-container {
+    display: inline;
 }

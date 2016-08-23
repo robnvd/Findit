@@ -6,7 +6,7 @@
         .run(appRun);
 
     appRun.$inject = ['routerHelper'];
-    
+
     function appRun(routerHelper) {
         routerHelper.configureStates(getStates());
     }
@@ -17,9 +17,18 @@
                 state: 'home',
                 config: {
                     url: '/',
-                    templateUrl: 'templates/home/home.html',
-                    controller: 'homeController',
-                    controllerAs: 'vm',
+                    views: {
+                        'map': {
+                            templateUrl: 'templates/home/map.template.html',
+                            controller: 'homeController',
+                            controllerAs: 'vm',
+                        },
+                        'search': {
+                            templateUrl: 'templates/home/search.template.html',
+                            controller: 'searchController',
+                            controllerAs: 'vm',
+                        }
+                    },
                     sp: {
                         authenticate: false
                     }

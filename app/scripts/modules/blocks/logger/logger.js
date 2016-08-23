@@ -31,12 +31,12 @@
 
     function info(message, data, title) {
       toastr.info(message, title);
-      $log.info('Info: ' + message, data);
+      //$log.info('Info: ' + message, data);
     }
 
     function success(message, data, title) {
       toastr.success(message, title);
-      $log.info('Success: ' + message, data);
+      //$log.info('Success: ' + message, data);
     }
 
     function warning(message, data, title) {

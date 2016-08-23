@@ -1,0 +1,87 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$close()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h2 class="modal-title" id="modal-title"><img ng-src="{{vm.place.icon}}" width="15" height="15"> {{vm.place.name}} </img>
+    </h2>
+</div>
+<div class="modal-body" id="modal-body">
+    <span us-spinner spinner-key="place-modal-body"></span>
+    <div class="container-fluid" ng-hide="vm.placeIsLoading">
+        <p ng-show="vm.place.formatted_address || vm.place.vicinity">Address: {{vm.place.formatted_address ? vm.place.formatted_address : vm.place.vicinity}}</p>
+        <p ng-show="vm.place.formatted_phone_number">Phone: {{vm.place.formatted_phone_number}}</p>
+        <p ng-show="vm.place.html_attributions.length > 0">Links: <span ng-repeat="attr in vm.place.html_attributions">{{attr}}</span></p>
+        <p ng-show="vm.place.permanently_closed">Place is closed: {{vm.place.permanently_closed | boolean}}</p>
+        <p ng-show="vm.place.price_level">Expensivness: {{vm.place.price_level}}</p>
+        <p ng-show="vm.place.rating">Rating:
+            <star-rating ng-model="vm.place.rating" readonly="true" max="5"></star-rating>
+        </p>
+        <p ng-show="vm.place.types.length > 0">Types: <span ng-repeat="type in vm.place.types"> {{type}} </span></p>
+        <p ng-show="vm.place.url">Google page: <a href="{{vm.place.url}}">ClickHere</a></p>
+        <p ng-show="vm.place.url">Webpage: <a href="{{vm.place.url}}">Webpage</a></p>
+        <p ng-show="vm.place.opening_hours.length > 0">Opening hours (Open Now: {{vm.place.opening_hours.open_now | boolean}}): <span ng-repeat="hour in vm.place.opening_hours.weekday_text">{{hour}}</span></p>
+        <p ng-show="vm.place.photos.length > 0">
+            Photos ({{vm.place.photos.length || 0}}):
+            <a href="" ng-show="vm.hidePhotos" ng-click="vm.hidePhotos = false">Show photos</a>
+            <a href="" ng-hide="vm.hidePhotos" ng-click="vm.hidePhotos = true">Hide photos</a>
+        </p>
+
+        <div uib-collapse="vm.hidePhotos" class="fade">
+            <div uib-carousel active="true" interval="97000" no-wrap="false">
+                <div uib-slide ng-repeat="photo in vm.place.photos" index="$index">
+                    <img ng-src="{{photo.getUrl({maxWidth: photo.width, maxHeigth: photo.height})}}"></img>
+                </div>
+            </div>
+        </div>
+
+        <p ng-show="vm.place.reviews.length > 0">
+            Reviews ({{vm.place.reviews.length || 0}}):
+            <a href="" ng-show="vm.hideReviews" ng-click="vm.hideReviews = false">Show reviews</a>
+            <a href="" ng-hide="vm.hideReviews" ng-click="vm.hideReviews = true">Hide reviews</a>
+        </p>
+        <div uib-collapse="vm.hideReviews" class="fade">
+            <div uib-carousel active="true" interval="97000" no-wrap="false">
+                <div uib-slide ng-repeat="review in vm.place.reviews" index="$index">
+                    <review author="review.author_name" created-on="review.time" review-text="review.text" rating="review.rating"></review>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-lg-8 text-left">
+            <button type="button" ng-hide="vm.hideBookmark" class="btn btn-danger text-left" ng-click="vm.addToBookmarks()">
+                <i class="fa fa-heart" aria-hidden="true"></i> Add to bookmarks
+            </button>
+            <button type="button" ng-show="vm.hideBookmark" class="btn btn-default text-left" ng-click="vm.removeFromBookmarks()">
+                <i class="fa fa-frown-o" aria-hidden="true"></i> Remove bookmarks
+            </button>
+        </div>
+        <div class="col-lg-4">
+            <button type="button" class="btn btn-success" ng-hide="vm.addReviewToggle" ng-click="vm.toggleAddReview()">Add review</button>
+            <button type="button" class="btn btn-primary" ng-click="$close() ">Close</button>
+        </div>
+    </div>
+</div>
+<div uib-collapse="!vm.addReviewToggle" class="add-review-container fade">
+    <fieldset>
+        <div class="form-group">
+            <label for="textArea" class="col-lg-2 control-label">Rating:</label>
+            <div class="col-lg-10">
+                <star-rating ng-model="vm.newReview.rating" max="5"></star-rating>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="textArea" class="col-lg-2 control-label">Review:</label>
+            <div class="col-lg-10">
+                <textarea name="newReviewText" id="newReviewText" ng-model="vm.newReview.reviewText" class="form-control" rows="3"></textarea>
+                <span class="help-block">Watch your language.</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button type="button" class="btn btn-success" ng-click="vm.saveReview()">Add review</button>
+                <button type="button" class="btn btn-warning" ng-click="vm.toggleAddReview() ">Close</button>
+            </div>
+        </div>
+    </fieldset>
+</div>

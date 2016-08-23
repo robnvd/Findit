@@ -20,10 +20,10 @@
         function post(url, data) { 
             return $http.post(apiUrl + url, data).catch((error) => { $q.reject(error); });
         }
-        function put() { 
+        function put(url, data) { 
             return $http.put(apiUrl + url, data).catch((error) => { $q.reject(error); });
         }
-        function Delete() {
+        function Delete(url, data) {
             return $http.delete(apiUrl + url, data).catch((error) => { $q.reject(error); });
         }
     }

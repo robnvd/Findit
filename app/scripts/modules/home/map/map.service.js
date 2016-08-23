@@ -31,6 +31,7 @@
         service.setCenterMarkerPosition = setCenterMarkerPosition;
 
         service.clearAllMarkers = clearAllMarkers;
+        service.clearMarkersOutOfRange = clearMarkersOutOfRange;
         service.addMarkerToMapForPlace = addMarkerToMapForPlace;
 
         service.getCurrentLocation = getCurrentLocation;
@@ -39,35 +40,41 @@
 
         function init(options) {
             return getMapInstance().then((map) => {
-                _mapInstace = map;
+                if (!_mapInstace) {
+                    _mapInstace = map;
+                }
 
-                _centerMarker = new google.maps.Marker({ 
-                    animation: 'BOUNCE',
-                    draggable: true,
-                    label: {
-                        color: 'green',
-                        text: 'C'
-                    },
-                    position: map.getCenter(),
-                    title: 'You are here',
-                    map: map 
-                });
-                google.maps.event.addListener(_centerMarker, 'position_changed', () => {
-                    if(options.centerMarkerPositionChangedCallback) {
-                        options.centerMarkerPositionChangedCallback(_centerMarker);
-                    }
-                });
-
-                _radius = new google.maps.Circle({
-                    center: map.getCenter(),
-                    radius: options.radius || 700,
-                    strokeColor: '#59C4C5',
-                    strokeOpacity: 0.4,
-                    strokeWeight: 2,
-                    fillColor: '#59C4C5',
-                    fillOpacity: 0.2,
-                    map: map
-                });
+                if (!_centerMarker) {
+                    _centerMarker = new google.maps.Marker({
+                        animation: 'BOUNCE',
+                        draggable: true,
+                        label: {
+                            color: 'green',
+                            text: 'C'
+                        },
+                        position: map.getCenter(),
+                        title: 'You are here',
+                        map: map
+                    });
+                    google.maps.event.addListener(_centerMarker, 'dragend', () => {
+                        if (options.centerMarkerDragEndedCallback) {
+                            options.centerMarkerDragEndedCallback(_centerMarker);
+                        }
+                    });
+                }
+                
+                if (!_radius) {
+                    _radius = new google.maps.Circle({
+                        center: map.getCenter(),
+                        radius: options.radius || 700,
+                        strokeColor: '#59C4C5',
+                        strokeOpacity: 0.4,
+                        strokeWeight: 2,
+                        fillColor: '#59C4C5',
+                        fillOpacity: 0.2,
+                        map: map
+                    });
+                }
             });
         }
 
@@ -139,9 +146,9 @@
 
         //Center marker API
         function setCenterMarkerPosition(arg1, arg2) {
-            if(arg2) {
+            if (arg2) {
                 const center = new google.maps.LatLng(arg1, arg2);
-                _centerMarker.setPosition(center); 
+                _centerMarker.setPosition(center);
             } else {
                 _centerMarker.setPosition(arg1);
             }
@@ -150,9 +157,17 @@
         //Markers API
         function clearAllMarkers() {
             angular.forEach(_markers, (marker) => {
-                marker.setMap = null;
+                marker.setMap(null);
             });
             _markers = [];
+        }
+
+        function clearMarkersOutOfRange() {
+            angular.forEach(_markers, (marker) => {
+                if (google.maps.geometry.spherical.computeDistanceBetween(marker.getPosition(), _mapInstace.getCenter()) > _radius.getRadius()) {
+                    marker.setMap(null);
+                }
+            });
         }
 
         function addMarkerToMapForPlace(place, clickEvent) {
@@ -165,6 +180,7 @@
                     clickEvent(place);
                 });
             }
+            _markers.push(marker);
         }
 
         //Other

@@ -13,6 +13,7 @@
   <!-- build:css styles/vendor.css -->
   <!-- bower:css -->
   <link rel="stylesheet" href="/bower_components/toastr/toastr.css" />
+  <link rel="stylesheet" href="/bower_components/angular-loading-bar/build/loading-bar.css" />
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -32,9 +33,14 @@
   <ng-include src="'templates/nav/navbar.html'"></ng-include>
 
   <!--<div class="container">-->
-  <ui-view>
-    Loading...
-  </ui-view>
+  <div class="home-container fill">
+    <div ui-view="map" class="ui-view-container fill">
+      Loading...
+    </div>
+    <div ui-view="search" class="ui-view-container fill">
+      Loading...
+    </div>
+  </div>
   <!--</div>-->
   <!--<footer class="footer navbar-fixed-bottom">
     <div class="container">
@@ -70,6 +76,9 @@
   <script src="/bower_components/moment/moment.js"></script>
   <script src="/bower_components/ngGeolocation/ngGeolocation.js"></script>
   <script src="/bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+  <script src="/bower_components/angular-loading-bar/build/loading-bar.js"></script>
+  <script src="/bower_components/spin.js/spin.js"></script>
+  <script src="/bower_components/angular-spinner/angular-spinner.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -102,10 +111,6 @@
   <script src="scripts/modules/core/core.constants.js"></script>
   <script src="scripts/modules/core/core.route.js"></script>
 
-  <script src="scripts/modules/bookmarks/bookmarks.module.js"></script>
-  <script src="scripts/modules/bookmarks/bookmarks.controller.js"></script>
-  <script src="scripts/modules/bookmarks/bookmarks.route.js"></script>
-
   <script src="scripts/modules/login/login.module.js"></script>
   <script src="scripts/modules/login/login.controller.js"></script>
   <script src="scripts/modules/login/login.route.js"></script>
@@ -114,20 +119,25 @@
   <script src="scripts/modules/home/home.module.js"></script>
   <script src="scripts/modules/home/home.constants.js"></script>
   <script src="scripts/modules/home/home.route.js"></script>
-  <script src="scripts/modules/home/map.service.js"></script>
-  <script src="scripts/modules/home/home/home.controller.js"></script>
-  <script src="scripts/modules/home/home/home.service.js"></script>
+  <script src="scripts/modules/home/directives/review.directive.js"></script>
+  <script src="scripts/modules/home/directives/starRating.directive.js"></script>
+  <script src="scripts/modules/home/map/map.controller.js"></script>
+  <script src="scripts/modules/home/map/map.service.js"></script>
   <script src="scripts/modules/home/place/place.controller.js"></script>
   <script src="scripts/modules/home/place/place.service.js"></script>
-  <script src="scripts/modules/home/place/review.directive.js"></script>
-  <script src="scripts/modules/home/place/starRating.directive.js"></script>
+  <script src="scripts/modules/home/search/search.controller.js"></script>
+
+  
+  <script src="scripts/modules/home/bookmarks/bookmarks.module.js"></script>
+  <script src="scripts/modules/home/bookmarks/bookmarks.controller.js"></script>
+  <script src="scripts/modules/home/bookmarks/bookmarks.route.js"></script>
+
+  <script src="scripts/modules/home/reviews/reviews.module.js"></script>
+  <script src="scripts/modules/home/reviews/reviews.controller.js"></script>
+  <script src="scripts/modules/home/reviews/reviews.route.js"></script>
 
   <script src="scripts/modules/nav/nav.module.js"></script>
   <script src="scripts/modules/nav/nav.controller.js"></script>
-
-  <script src="scripts/modules/reviews/reviews.module.js"></script>
-  <script src="scripts/modules/reviews/reviews.controller.js"></script>
-  <script src="scripts/modules/reviews/reviews.route.js"></script>
 
   <script src="scripts/services/storage.service.js"></script>
   <script src="scripts/services/data.service.js"></script>
