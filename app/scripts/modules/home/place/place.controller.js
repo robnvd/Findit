@@ -112,12 +112,12 @@
         }
 
         function _resolveAddToBookmarks() {
-            logger.success("Bookmark saved successfully!");
+            logger.success('Bookmark saved successfully!');
             vm.hideBookmark = true;
         }
 
         function _resolveRemoveFromBookmarks() {
-            logger.success("Bookmark removed successfully!");
+            logger.success('Bookmark removed successfully!');
             vm.hideBookmark = false;
         }
     }
