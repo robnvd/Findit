@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -13,14 +13,15 @@
         let _markers = [];
         let _radius = null;
         let _centerMarker = null;
+        let _options = null;
 
         service.init = init;
 
         service.getMapInstance = getMapInstance;
         service.getMapCenter = getMapCenter;
+        service.clearMap = clearMap;
         service.setMapCenter = setMapCenter;
-        service.setMapCenterWithCenterMarker = setMapCenterWithCenterMarker;
-        service.setMapCenterWithRadiusAndCenterMarker = setMapCenterWithRadiusAndCenterMarker;
+        service.setMapZoom = setMapZoom;
 
         service.getMapPlacesService = getMapPlacesService;
         service.searchNearbyPlaces = searchNearbyPlaces;
@@ -40,42 +41,70 @@
         /////////////////
 
         function init(options) {
+            _options = options;
+            return getCurrentLocation().then((location) => {
+                return _initInstances(location);
+            }, (err) => {
+                return _initInstances(null);
+            })
+            
+        }
+
+        function _initInstances(location) {
             return getMapInstance().then((map) => {
                 if (!_mapInstace) {
                     _mapInstace = map;
+                    if(location) {
+                        _center(_mapInstace, location.coords.latitude, location.coords.longitude);
+                    }
+                    else {
+                        _center(_mapInstace, 44.4267674, 26.102538399999958);
+                    }
+                    setMapZoom(16);
                 }
 
                 if (!_centerMarker) {
-                    _centerMarker = new google.maps.Marker({
-                        animation: 'BOUNCE',
-                        draggable: true,
-                        label: {
-                            color: 'green',
-                            text: 'C'
-                        },
-                        position: map.getCenter(),
-                        title: 'You are here',
-                        map: map
-                    });
-                    google.maps.event.addListener(_centerMarker, 'dragend', () => {
-                        if (options.centerMarkerDragEndedCallback) {
-                            options.centerMarkerDragEndedCallback(_centerMarker);
-                        }
-                    });
+                    _centerMarker = _createCenterMarker();
                 }
 
                 if (!_radius) {
-                    _radius = new google.maps.Circle({
-                        center: map.getCenter(),
-                        radius: options.radius || 700,
-                        strokeColor: '#59C4C5',
-                        strokeOpacity: 0.4,
-                        strokeWeight: 2,
-                        fillColor: '#59C4C5',
-                        fillOpacity: 0.2,
-                        map: map
-                    });
+                    _radius = _createRadius();
                 }
+            });
+        }
+
+        function _createCenterMarker() {
+            let marker = new google.maps.Marker({
+                animation: 'BOUNCE',
+                draggable: true,
+                label: {
+                    color: 'green',
+                    text: 'C'
+                },
+                position: _mapInstace.getCenter(),
+                title: 'You are here',
+                map: _mapInstace
+            });
+
+            google.maps.event.addListener(marker, 'dragend', () => {
+                if (_options.centerMarkerDragEndedCallback) {
+                    _options.centerMarkerDragEndedCallback(marker);
+                }
+            });
+
+            return marker;
+        }
+
+        function _createRadius() {
+            return new google.maps.Circle({
+                center: _mapInstace.getCenter(),
+                radius: _options.radius || 700,
+                strokeColor: '#59C4C5',
+                strokeOpacity: 0.4,
+                strokeWeight: 2,
+                fillColor: '#59C4C5',
+                fillOpacity: 0.2,
+                map: _mapInstace
             });
         }
 
@@ -88,19 +117,36 @@
             return _mapInstace.getCenter();
         }
 
-        function setMapCenter(arg1, arg2) {
-            _center(_mapInstace, arg1, arg2);
+        function clearMap(markers = true, centerMarker = true, radius = true) {
+            if (markers === true) {
+                clearAllMarkers();
+            }
+            if (_centerMarker && centerMarker === true) {
+                _centerMarker.setMap(null);
+                _centerMarker = null;
+            }
+            if (_radius && radius === true) {
+                _radius.setMap(null);
+                _radius = null;
+            }
         }
 
-        function setMapCenterWithCenterMarker(arg1, arg2) {
+        function setMapCenter(arg1, arg2, centerMarker = false, radius = false) {
             _center(_mapInstace, arg1, arg2);
-            setRadiusCenter(arg1, arg2);
+
+            if (centerMarker === true) {
+                setCenterMarkerPosition(arg1, arg2);
+            }
+
+            if (radius === true) {
+                setRadiusCenter(arg1, arg2);
+            }
         }
 
-        function setMapCenterWithRadiusAndCenterMarker(arg1, arg2) {
-            _center(_mapInstace, arg1, arg2);
-            setRadiusCenter(arg1, arg2);
-            setCenterMarkerPosition(arg1, arg2);
+        function setMapZoom(zoom) {
+            if(_mapInstace) {
+                _mapInstace.setZoom(zoom);
+            }
         }
 
         //Map Places API

@@ -12,6 +12,7 @@
 
         <div class="collapse navbar-collapse" id="navbar-menu">
             <ul class="nav navbar-nav navbar-right">
+                <li ui-sref-active="active"><a ui-sref="home.search">Home</a></li>
                 <li class="dropdown" if-user>
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome {{vm.userData.username}} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">

@@ -6,8 +6,8 @@
   var config = {
     appErrorPrefix: '[Findit Error] ',
     appTitle: 'Findit',
-    urlPrefix: 'http://localhost:3000',
-    // urlPrefix: 'http://54.93.64.31:3000',
+    // urlPrefix: '!{api-endpoint}',
+    urlPrefix: 'https://52.59.245.153',
     localStorageType: 'sessionStorage',
     localStoragePrefix: 'Findit.'
   };

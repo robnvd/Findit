@@ -18,8 +18,8 @@
             <star-rating ng-model="vm.place.rating" readonly="true" max="5"></star-rating>
         </p>
         <p ng-show="vm.place.types.length > 0">Types: <span ng-repeat="type in vm.place.types"> {{type}} </span></p>
-        <p ng-show="vm.place.url">Google page: <a href="{{vm.place.url}}">ClickHere</a></p>
-        <p ng-show="vm.place.website">Webpage: <a href="{{vm.place.website}}">Webpage</a></p>
+        <p ng-show="vm.place.url">Google page: <a href="{{vm.place.url}}" target="__blank">ClickHere</a></p>
+        <p ng-show="vm.place.website">Webpage: <a href="{{vm.place.website}}" target="__blank">Webpage</a></p>
         <p ng-show="vm.place.opening_hours.length > 0">Opening hours (Open Now: {{vm.place.opening_hours.open_now | boolean}}): <span ng-repeat="hour in vm.place.opening_hours.weekday_text">{{hour}}</span></p>
         <p ng-show="vm.place.photos.length > 0">
             Photos ({{vm.place.photos.length || 0}}):
