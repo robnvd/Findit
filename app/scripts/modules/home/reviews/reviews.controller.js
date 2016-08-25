@@ -5,82 +5,69 @@
         .module('Findit.Home')
         .controller('reviewsController', reviewsController);
 
-    reviewsController.$inject = ['reviewsService', 'placeService', 'mapService', '$uibModal', '$q', '$timeout', 'logger'];
-    function reviewsController(reviewsService, placeService, mapService, $uibModal, $q, $timeout, logger) {
+    reviewsController.$inject = ['reviewsService', 'placeService', 'mapService', '$uibModal', '$q', '$timeout', 'logger', '$scope'];
+    function reviewsController(reviewsService, placeService, mapService, $uibModal, $q, $timeout, logger, $scope) {
         var vm = this;
         vm.reviews = [];
 
-        vm.showPlaceDetails = function(review) {
-            _markerClickCallback(review.place);
+        vm.showPlaceDetails = function (review) {
+            _markerClickCallback(review, true);
         };
 
-        vm.showPlaceOnMap = function(review) {
-            mapService.clearMap();
-            mapService.setMapCenter(review.place.geometry.location);
-            mapService.setMapZoom(16);
-            mapService.addMarkerToMapForPlace(review.place, _markerClickCallback)
+        vm.showPlaceOnMap = function (review) {
+            placeService.getGooglePlaceDetails(review.placeId)
+                .then((place) => {
+                    mapService.clearMap();
+                    mapService.setMapCenter(place.geometry.location);
+                    mapService.setMapZoom(16);
+                    mapService.addMarkerToMapForPlace(place, _markerClickCallback)
+
+                    _updateCachedPlaceData(review, place);
+                }, _errorHandler);
         };
+
+        $scope.$on('reviews-count-changed', () => _init());
 
         _init();
 
         ////////////////
 
         function _init() {
+            vm.dataIsLoading = true;
             reviewsService.getPersonReviews()
                 .then(_resolveGetPersonReviews, _errorHandler)
-                .then(_resolveGetPlacesDetails, _errorHandler);
+                .then(() => {
+                    vm.dataIsLoading = false;
+                    vm.noData = vm.reviews.length <= 0;
+                });
         }
 
         function _resolveGetPersonReviews(response) {
-            vm.dataIsLoading = true;
             if (response.data) {
                 vm.reviews = response.data;
-                return response.data;
             }
-            return [];
         }
 
-        function _resolveGetPlacesDetails(reviews) {
-            let promises = [];
-            angular.forEach(reviews, (review, index) => {
-                //TODO optimize place details requests
-                if ((index + 1) % 10 === 0) {
-                    $timeout(() => {
-                        let promise = _getPlaceDetails(review);
-                        promises.push(promise);
-                    }, 1000);
-                } else {
-                    var promise = _getPlaceDetails(review);
-                    promises.push(promise);
-                }
-
-            });
-            $q.all(promises).then(() => {
-                vm.dataIsLoading = false;
-            }, _errorHandler);
-        }
-
-        function _getPlaceDetails(review) {
-            return placeService.getGooglePlaceDetails(review.placeId)
-                .then((place) => {
-                    review.place = place;
-                }, _errorHandler);
-        }
-
-        function _markerClickCallback(place) {
-            $uibModal.open({
-                backdrop: 'static',
-                templateUrl: 'templates/home/place.tpl.html',
-                ariaLabelledBy: 'modal-title',
-                ariaDescribedBy: 'modal-body',
-                size: 'lg',
-                controller: 'placeController',
-                controllerAs: 'vm',
-                resolve: {
-                    place: () => place
-                }
-            });
+        function _markerClickCallback(obj, loadPlace = false) {
+            if (loadPlace === true) {
+                placeService.getGooglePlaceDetails(obj.placeId)
+                    .then((place) => {
+                        placeService.showPlaceDetails(place, _init);
+                        _updateCachedPlaceData(obj, place);
+                    }, _errorHandler);
+            } else {
+                placeService.showPlaceDetails(obj, _init);
+            }
         };
+
+        function _updateCachedPlaceData(obj, place) {
+            if (obj.place.name !== place.name || obj.place.address !== place.formatted_address) {
+                placeService.updateCachedPlace(obj.place.guid, place);
+            }
+            obj.place.name = place.name;
+            obj.place.address = place.formatted_address ? place.formatted_address : place.vicinity;
+            obj.place.location = JSON.stringify(place.geometry.location);
+        }
 
         function _errorHandler(error) {
             logger.error(error);

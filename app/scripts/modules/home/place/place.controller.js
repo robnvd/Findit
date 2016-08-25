@@ -5,11 +5,10 @@
         .module('Findit.Home')
         .controller('placeController', controller);
 
-    controller.$inject = ['place', '$scope', 'placeService', 'logger'];
-    function controller(place, $scope, placeService, logger) {
+    controller.$inject = ['place', 'refreshList', '$rootScope', 'placeService', 'reviewsService', 'bookmarksService', 'logger'];
+    function controller(place, refreshList, $rootScope, placeService, reviewsService, bookmarksService, logger) {
         //init
         var vm = this;
-
         vm.dataIsLoading = true;
 
         vm.hidePhotos = true;
@@ -18,7 +17,13 @@
         vm.addReviewToggle = false;
         vm.newReview = {
             placeId: place.place_id,
-            rating: 5
+            rating: 5,
+            place: {
+                placeId: place.place_id,
+                name: place.name,
+                address: place.formatted_address ? place.formatted_address : place.vicinity,
+                location: JSON.stringify(place.geometry.location)
+            }
         };
 
         vm.toggleAddReview = () => {
@@ -27,23 +32,24 @@
         };
 
         vm.saveReview = () => {
-            placeService.addCustomReview(vm.newReview).then((result) => {
-                vm.place.reviews.push(..._turnCustomReviewToGoogleReview([result.data]));
-                _resetReviewForm();
-            }, (err) => {
-                logger.error(err);
-                _resetReviewForm();
-            });
+            reviewsService.addCustomReview(vm.newReview)
+                .then(_resolveAddCustomReview, _handleError);
         };
 
         vm.addToBookmarks = () => {
-            placeService.addToBookmarks({
-                placeId: place.place_id
+            bookmarksService.addToBookmarks({
+                placeId: place.place_id,
+                place: {
+                    placeId: place.place_id,
+                    name: place.name,
+                    address: place.formatted_address ? place.formatted_address : place.vicinity,
+                    location: JSON.stringify(place.geometry.location)
+                }
             }).then(_resolveAddToBookmarks, _handleError);
         };
 
         vm.removeFromBookmarks = () => {
-            placeService.removeFromBookmarks(place.place_id)
+            bookmarksService.removeFromBookmarks(place.place_id)
                 .then(_resolveRemoveFromBookmarks, _handleError);
         };
 
@@ -64,7 +70,7 @@
         }
 
         function _resolvePlaceBookmark(place) {
-            return placeService.getPlaceBookmark(place.place_id)
+            return bookmarksService.getPlaceBookmark(place.place_id)
                 .then((response) => {
                     vm.hideBookmark = response.data ? true : false;
                     return place;
@@ -72,7 +78,7 @@
         }
 
         function _resolveCustomReviews(place) {
-            return placeService.getPlaceCustomReviews(place.place_id)
+            return reviewsService.getPlaceCustomReviews(place.place_id)
                 .then((result) => {
                     if (result.data && place.reviews) {
                         var transformedReviews = _turnCustomReviewToGoogleReview(result.data);
@@ -85,11 +91,46 @@
                 });
         }
 
+        function _resolveAddCustomReview(response) {
+            if (!vm.place.reviews) vm.place.reviews = [];
+            vm.place.reviews.push(..._turnCustomReviewToGoogleReview([response.data]));
+            logger.success('Review saved successfully!');
+            _resetReviewForm();
+            vm.addReviewToggle = false;
+
+            if (refreshList) {
+                refreshList();
+            } else {
+                $rootScope.$broadcast('reviews-count-changed');
+            }
+        }
+
+        function _resolveAddToBookmarks() {
+            logger.success('Bookmark saved successfully!');
+            vm.hideBookmark = true;
+            if (refreshList) {
+                refreshList();
+            } else {
+                $rootScope.$broadcast('bookmarks-count-changed');
+            }
+        }
+
+        function _resolveRemoveFromBookmarks() {
+            logger.success('Bookmark removed successfully!');
+            vm.hideBookmark = false;
+            if (refreshList) {
+                refreshList();
+            } else {
+                $rootScope.$broadcast('bookmarks-count-changed');
+            }
+        }
+
         function _handleError(err) {
             //TODO handle error gracefully
             logger.error(err);
         }
 
+        //Private
         function _turnCustomReviewToGoogleReview(reviews) {
             var result = [];
             angular.forEach(reviews, (review) => {
@@ -107,18 +148,14 @@
             vm.newReview = {
                 placeId: place.place_id,
                 rating: 5,
-                reviewText: null
-            }
-        }
-
-        function _resolveAddToBookmarks() {
-            logger.success('Bookmark saved successfully!');
-            vm.hideBookmark = true;
-        }
-
-        function _resolveRemoveFromBookmarks() {
-            logger.success('Bookmark removed successfully!');
-            vm.hideBookmark = false;
+                reviewText: null,
+                place: {
+                    placeId: place.place_id,
+                    name: place.name,
+                    address: place.formatted_address ? place.formatted_address : place.vicinity,
+                    location: JSON.stringify(place.geometry.location)
+                }
+            };
         }
     }
 })();

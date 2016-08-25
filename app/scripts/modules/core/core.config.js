@@ -7,7 +7,8 @@
     appErrorPrefix: '[Findit Error] ',
     appTitle: 'Findit',
     // urlPrefix: '!{api-endpoint}',
-    urlPrefix: 'https://52.59.245.153',
+    // urlPrefix: 'https://52.59.245.153',
+    urlPrefix: 'http://localhost:3000',
     localStorageType: 'sessionStorage',
     localStoragePrefix: 'Findit.'
   };

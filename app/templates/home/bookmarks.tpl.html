@@ -10,7 +10,7 @@
                     <span class="small-text">(<a href="" ng-click="vm.showPlaceDetails(bookmark)">Details</a>)</span>
                 </p>
                 <p>
-                    {{bookmark.place.formatted_address ? bookmark.place.formatted_address : bookmark.place.vicinity}} 
+                    {{bookmark.place.address}} 
                     <span class="small-text">(<a href="" ng-click="vm.showPlaceOnMap(bookmark)">View on map</a>)</span>
                 </p>
                 <small>
@@ -21,5 +21,10 @@
                 </small>
             </blockquote>
         </div>
+    </div>
+    <div ng-show="vm.noData" ng-cloak>
+        <span class="centered">
+            <h2>No bookmarks :(</h2>
+        </span>
     </div>
 </div>

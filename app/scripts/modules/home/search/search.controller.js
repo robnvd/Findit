@@ -3,8 +3,8 @@
         .module('Findit.Home')
         .controller('searchController', controller);
 
-    controller.$inject = ['$scope', 'mapService', '$uibModal'];
-    function controller($scope, mapService, $uibModal) {
+    controller.$inject = ['$scope', 'placeService', 'mapService'];
+    function controller($scope, placeService, mapService) {
         var vm = this;
 
         vm.types = ['geocode', 'establishment', 'address'];
@@ -48,7 +48,9 @@
             };
 
             vm.search = () => {
-                mapService.searchPlacesByText(vm.searchData.place).then(_resolvePlaces, _handleErrors)
+                if(vm.searchData.place && vm.searchData.place.length > 0) {
+                    mapService.searchPlacesByText(vm.searchData.place).then(_resolvePlaces, _handleErrors)
+                }
             }
 
             mapService.searchNearbyPlaces().then(_resolvePlaces, _handleErrors);
@@ -75,18 +77,7 @@
         }
 
         function _markerClickCallback(place) {
-            $uibModal.open({
-                backdrop: 'static',
-                templateUrl: 'templates/home/place.tpl.html',
-                ariaLabelledBy: 'modal-title',
-                ariaDescribedBy: 'modal-body',
-                size: 'lg',
-                controller: 'placeController',
-                controllerAs: 'vm',
-                resolve: {
-                    place: () => place
-                }
-            });
+            placeService.showPlaceDetails(place);
         };
 
         function _handleErrors(err) {

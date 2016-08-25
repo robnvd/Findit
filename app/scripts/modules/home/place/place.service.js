@@ -5,14 +5,11 @@
         .module('Findit.Home')
         .service('placeService', placeService);
 
-    placeService.$inject = ['dataService', 'mapService', '$q', '$user'];
-    function placeService(dataService, mapService, $q, $user) {
+    placeService.$inject = ['dataService', 'mapService', '$q', '$user', '$uibModal'];
+    function placeService(dataService, mapService, $q, $user, $uibModal) {
         this.getGooglePlaceDetails = getGooglePlaceDetails;
-        this.getPlaceCustomReviews = getPlaceCustomReviews;
-        this.addCustomReview = addCustomReview;
-        this.getPlaceBookmark = getPlaceBookmark;
-        this.addToBookmarks = addToBookmarks;
-        this.removeFromBookmarks = removeFromBookmarks;
+        this.showPlaceDetails = showPlaceDetails;
+        this.updateCachedPlace = updateCachedPlace;
 
         ////////////////
 
@@ -30,36 +27,31 @@
             return deferred.promise;
         }
 
-        function getPlaceCustomReviews(placeId) {
-            return dataService.get(`Reviews/PlaceReviews?placeId=${placeId}`);
-        }
-
-        function addCustomReview(review) {
-            return dataService.post('Reviews/AddReview', review);
-        }
-
-        function getPlaceBookmark(placeId) {
-            return $user.get().then((user) => {
-                return dataService.get(`Bookmarks/PlaceBookmark?username=${user.username}&placeId=${placeId}`);
-            }, (error) => {
-                return error;
+        function showPlaceDetails(place, refreshList = undefined) {
+            return $uibModal.open({
+                backdrop: 'static',
+                templateUrl: 'templates/home/place.tpl.html',
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                size: 'lg',
+                controller: 'placeController',
+                controllerAs: 'vm',
+                resolve: {
+                    place: () => place,
+                    refreshList: () => refreshList
+                }
             });
         }
 
-        function addToBookmarks(bookmark) {
-            return $user.get().then((user) => {
-                return dataService.post(`Bookmarks/AddBookmark?username=${user.username}`, bookmark);
-            }, (error) => {
-                return error;
-            });
-        }
-
-        function removeFromBookmarks(placeId) {
-            return $user.get().then((user) => {
-                return dataService.delete(`Bookmarks/RemoveBookmark?username=${user.username}&placeId=${placeId}`);
-            }, (error) => {
-                return error;
-            });
+        function updateCachedPlace(placeGuid, place) {
+            let dto = {
+                guid: placeGuid,
+                placeId: place.place_id,
+                name: place.name,
+                address: place.formatted_address ? place.formatted_address : place.vicinity,
+                location: JSON.stringify(place.geometry.location)
+            };
+            return dataService.put('Places/UpdateCachedPlace', dto);
         }
     }
 })();

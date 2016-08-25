@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -47,21 +47,21 @@
             }, (err) => {
                 return _initInstances(null);
             })
-            
+
         }
 
         function _initInstances(location) {
             return getMapInstance().then((map) => {
                 if (!_mapInstace) {
                     _mapInstace = map;
-                    if(location) {
-                        _center(_mapInstace, location.coords.latitude, location.coords.longitude);
-                    }
-                    else {
-                        _center(_mapInstace, 44.4267674, 26.102538399999958);
-                    }
-                    setMapZoom(16);
                 }
+                if (location) {
+                    _center(_mapInstace, location.coords.latitude, location.coords.longitude);
+                }
+                else {
+                    _center(_mapInstace, 44.4267674, 26.102538399999958);
+                }
+                setMapZoom(16);
 
                 if (!_centerMarker) {
                     _centerMarker = _createCenterMarker();
@@ -144,7 +144,7 @@
         }
 
         function setMapZoom(zoom) {
-            if(_mapInstace) {
+            if (_mapInstace) {
                 _mapInstace.setZoom(zoom);
             }
         }

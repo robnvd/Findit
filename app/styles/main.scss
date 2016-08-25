@@ -117,6 +117,8 @@ ng-map {
     position: absolute;
     left:50%;
     top:50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
 }
 
 .fill.well {
@@ -142,4 +144,11 @@ blockquote a.remove-bookmark {
     font-weight: 400;
     line-height: 1.1;
     color: inherit;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+.ng-cloak, .x-ng-cloak {
+    opacity: 0;
 }

@@ -28,7 +28,7 @@
                 <div class="form-group" id="remoteLocation-placeholder" ng-show="vm.searchData.location !== 'near'">
                     <label for="remoteLocation" class="control-label">Remote location</label>
                     <input class="form-control" name="remoteLocation" id="remoteLocation" placeholder="Work area" places-auto-complete ng-model="vm.searchData.remoteLocation"
-                        types="geocode, establishment, address" on-place-changed="vm.remoteLocationChanged()" />
+                        type="vm.types" on-place-changed="vm.remoteLocationChanged()" />
                 </div>
 
                 <div class="form-group">

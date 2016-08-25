@@ -8,6 +8,8 @@
     reviewsService.$inject = ['dataService', '$user'];
     function reviewsService(dataService, $user) {
         this.getPersonReviews = getPersonReviews;
+        this.getPlaceCustomReviews = getPlaceCustomReviews;
+        this.addCustomReview = addCustomReview;
 
         ////////////////
 
@@ -18,5 +20,14 @@
                 return error;
             });
         }
+
+        function getPlaceCustomReviews(placeId) {
+            return dataService.get(`Reviews/PlaceReviews?placeId=${placeId}`);
+        }
+
+        function addCustomReview(review) {
+            return dataService.post('Reviews/AddReview', review);
+        }
+
     }
 })();
