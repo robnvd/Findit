@@ -1,10 +1,18 @@
-<div class="fill scrollable-div">
-    <div class="col-lg-12">
-        <div class="fill spinner-container" ng-show="vm.dataIsLoading">
-            <span class="centered" us-spinner spinner-on="vm.dataIsLoading"></span>
-        </div>
+<div class="fill well scrollable-div">
+    <div class="fill spinner-container" ng-show="vm.dataIsLoading">
+        <span class="centered" us-spinner spinner-on="vm.dataIsLoading"></span>
+    </div>
+    <div ng-hide="vm.dataIsLoading">
         <div ng-repeat="review in vm.reviews">
-            <review author="review.createdBy" created-on="review.createdOn" review-text="review.reviewText" rating="review.rating"></review>
+            <blockquote>
+                <star-rating ng-model="review.rating" readonly="true"></star-rating>
+                <p>{{review.reviewText}}</p>
+                <small>{{review.place.name}}
+                    <span class="small-text">(<a href="" ng-click="vm.showPlaceDetails(review)">Details</a></span> | 
+                    <span class="small-text"><a href="" ng-click="vm.showPlaceOnMap(review)">View on map</a>)</span> 
+                    <cite title="Source Title">@ {{review.createdOn | dateTime}}</cite>
+                </small>
+            </blockquote>
         </div>
     </div>
 </div>

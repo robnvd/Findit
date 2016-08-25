@@ -25,7 +25,7 @@
             vm.locationChanged = (location) => {
                 if (location === 'near') {
                     mapService.getCurrentLocation().then((data) => {
-                        mapService.setMapCenterWithRadiusAndCenterMarker(data.coords.latitude, data.coords.longitude);
+                        mapService.setMapCenter(data.coords.latitude, data.coords.longitude, true, true);
                         mapService.searchNearbyPlaces().then(_resolvePlaces, _handleErrors);
                         vm.searchData.remoteLocation = null;
                     }, (err) => { console.log(err); });
@@ -37,7 +37,7 @@
                 if (currentPlace) {
                     if (currentPlace.geometry && currentPlace.geometry.location) {
                         const location = currentPlace.geometry.location;
-                        mapService.setMapCenterWithRadiusAndCenterMarker(location.lat(), location.lng());
+                        mapService.setMapCenter(location.lat(), location.lng(), true, true);
                         mapService.searchNearbyPlaces().then(_resolvePlaces, _handleErrors);
                     } else {
                         console.log('Could not obtain coordinates, try another place');
@@ -59,7 +59,7 @@
 
         function _centerMarkerDragEndedCallback(centerMarker) {
             const center = centerMarker.getPosition();
-            mapService.setMapCenterWithCenterMarker(center);
+            mapService.setMapCenter(center, null, true, true);
             mapService.clearAllMarkers();
             mapService.searchNearbyPlaces().then(_resolvePlaces, _handleErrors);
         }

@@ -10,10 +10,14 @@
         let vm = this;
         vm.bookmarks = [];
 
+        vm.showPlaceDetails = function(bookmark) {
+            _markerClickCallback(bookmark.place);
+        };
+
         vm.showPlaceOnMap = function(bookmark) {
-            //TODO remove center marker and radius (setMapCenter with options)
-            mapService.clearAllMarkers();
+            mapService.clearMap();
             mapService.setMapCenter(bookmark.place.geometry.location);
+            mapService.setMapZoom(16);
             mapService.addMarkerToMapForPlace(bookmark.place, _markerClickCallback)
         };
 
@@ -70,6 +74,10 @@
                 }, _errorHandler);
         }
 
+        function _resolveRemoveBookmark() {
+            logger.success('Bookmark removed successfully!');
+        }
+
         function _markerClickCallback(place) {
             $uibModal.open({
                 backdrop: 'static',
@@ -84,10 +92,6 @@
                 }
             });
         };
-
-        function _resolveRemoveBookmark() {
-            logger.success('Bookmark removed successfully!');
-        }
 
         function _errorHandler(error) {
             logger.error(error);
