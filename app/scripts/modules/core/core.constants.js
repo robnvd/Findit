@@ -5,7 +5,9 @@
     .module('Findit.Core')
     .constant('toastr', toastr)
     .constant('baseUrl', 'http://localhost:3000')
+    // .constant('baseUrl', 'http://54.93.64.31:3000')
     .constant('apiUrl', 'http://localhost:3000/api/')
+    // .constant('apiUrl', 'http://54.93.64.31:3000/api/')
     .constant('dateTimeFormat', 'DD MMM Y - HH:mm')
     .constant('moment', moment);
 })();

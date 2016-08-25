@@ -13,7 +13,7 @@
 
     $stormpath.uiRouter({
       loginState: 'login',
-      defaultPostLoginState: 'home'
+      defaultPostLoginState: 'home.search'
     });
   }
 
@@ -23,7 +23,11 @@
         state: '404',
         config: {
           url: '/404',
-          templateUrl: 'templates/core/404.html'
+          views: {
+            'main': {
+              templateUrl: 'templates/core/404.tpl.html'
+            }
+          }
         }
       }
     ];

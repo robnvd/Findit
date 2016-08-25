@@ -95,7 +95,7 @@ gulp.task('extras', () => {
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-gulp.task('serve', [ 'styles', 'scripts', 'fonts'], () => {
+gulp.task('serve', ['styles', 'scripts', 'fonts'], () => {
   browserSync({
     notify: false,
     port: 9000,
@@ -103,7 +103,8 @@ gulp.task('serve', [ 'styles', 'scripts', 'fonts'], () => {
       baseDir: ['.tmp', 'app'],
       routes: {
         '/bower_components': 'bower_components'
-      }
+      },
+      middleware: [require("connect-logger")()]
     }
   });
 

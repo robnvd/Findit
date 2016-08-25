@@ -23,7 +23,7 @@
             vm.locationChanged = (location) => {
                 if (location === 'near') {
                     mapService.getCurrentLocation().then((data) => {
-                        mapService.setMapCenter(data.coords.latitude, data.coords.longitude);
+                        mapService.setMapCenterWithRadiusAndCenterMarker(data.coords.latitude, data.coords.longitude);
                         mapService.searchNearbyPlaces().then(_resolvePlaces, _handleErrors);
                         vm.searchData.remoteLocation = null;
                     }, (err) => { console.log(err); });
@@ -35,7 +35,7 @@
                 if (currentPlace) {
                     if (currentPlace.geometry && currentPlace.geometry.location) {
                         const location = currentPlace.geometry.location;
-                        mapService.setMapCenter(location.lat(), location.lng());
+                        mapService.setMapCenterWithRadiusAndCenterMarker(location.lat(), location.lng());
                         mapService.searchNearbyPlaces().then(_resolvePlaces, _handleErrors);
                     } else {
                         console.log('Could not obtain coordinates, try another place');
@@ -57,7 +57,7 @@
 
         function _centerMarkerDragEndedCallback(centerMarker) {
             const center = centerMarker.getPosition();
-            mapService.setMapCenterWithoutCenterMarker(center);
+            mapService.setMapCenterWithCenterMarker(center);
             mapService.clearAllMarkers();
             mapService.searchNearbyPlaces().then(_resolvePlaces, _handleErrors);
         }
@@ -75,7 +75,7 @@
         function _markerClickCallback(place) {
             $uibModal.open({
                 backdrop: 'static',
-                templateUrl: 'templates/home/place.template.html',
+                templateUrl: 'templates/home/place.tpl.html',
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
                 size: 'lg',

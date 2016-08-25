@@ -1,14 +1,14 @@
-(function() {
-'use strict';
+(function () {
+    'use strict';
 
     angular
-        .module('Findit.Login')
-        .controller('signupController', controller);
+        .module('Findit.Account')
+        .controller('loginController', controller);
 
     controller.$inject = ['$scope'];
     function controller($scope) {
         var vm = this;
-        
+
 
         activate();
 

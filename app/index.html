@@ -2,9 +2,11 @@
 <html class="no-js" lang="en" ng-app="Findit">
 
 <head>
+  <base href="/">
   <meta charset="utf-8">
   <meta name="description" content="FindIt">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  
   <title>FindIt</title>
 
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -30,14 +32,13 @@
   <!--[if lt IE 10]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-  <ng-include src="'templates/nav/navbar.html'"></ng-include>
+  <ng-include src="'templates/nav/navbar.tpl.html'"></ng-include>
 
   <!--<div class="container">-->
   <div class="home-container fill">
-    <div ui-view="map" class="ui-view-container fill">
+    <div ui-view="main" class="ui-view-container fill">
       Loading...
     </div>
-    <div ui-view="sidePanel" class="ui-view-container col-lg-3 col-md-3 col-sm-12 fill well">
     </div>
   </div>
   <!--</div>-->
@@ -78,6 +79,7 @@
   <script src="/bower_components/angular-loading-bar/build/loading-bar.js"></script>
   <script src="/bower_components/spin.js/spin.js"></script>
   <script src="/bower_components/angular-spinner/angular-spinner.js"></script>
+  <script src="/bower_components/angular-confirm-modal/angular-confirm.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -110,10 +112,13 @@
   <script src="scripts/modules/core/core.constants.js"></script>
   <script src="scripts/modules/core/core.route.js"></script>
 
-  <script src="scripts/modules/login/login.module.js"></script>
-  <script src="scripts/modules/login/login.controller.js"></script>
-  <script src="scripts/modules/login/login.route.js"></script>
-  <script src="scripts/modules/login/signup.controller.js"></script>
+  <script src="scripts/modules/account/account.module.js"></script>
+  <script src="scripts/modules/account/account.route.js"></script>
+  <script src="scripts/modules/account/login.controller.js"></script>
+  <script src="scripts/modules/account/signup.controller.js"></script>
+  <script src="scripts/modules/account/forgot.controller.js"></script>
+  <script src="scripts/modules/account/reset.controller.js"></script>
+  <script src="scripts/modules/account/social.controller.js"></script>
 
   <script src="scripts/modules/home/home.module.js"></script>
   <script src="scripts/modules/home/home.constants.js"></script>

@@ -1,0 +1,19 @@
+<div class="fill well scrollable-div">
+    <div class="fill spinner-container" ng-show="vm.dataIsLoading">
+        <span class="centered" us-spinner spinner-on="vm.dataIsLoading"></span>
+    </div>
+    <div ng-hide="vm.dataIsLoading">
+        <div ng-repeat="bookmark in vm.bookmarks">
+            <blockquote>
+                <h4>{{bookmark.place.name}}</h4>
+                <p>View on map: <a href="" ng-click="vm.showPlaceOnMap(bookmark)">{{bookmark.place.formatted_address ? bookmark.place.formatted_address : bookmark.place.vicinity}}</a></p>
+                <small>
+                    added @ {{bookmark.createdOn | dateTime}} | 
+                    <a href="" confirm="Are you sure you want to remove the bookmark?"
+                            confirm-setting="{ size: 'sm' }" confirm-title="Remove bookmark" confirm-ok="Yes" 
+                            confirm-cancel="No" ng-click="vm.removeBookmark($index)" class="remove-bookmark">Remove bookmark :(</a>
+                </small>
+            </blockquote>
+        </div>
+    </div>
+</div>

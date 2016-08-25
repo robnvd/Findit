@@ -103,8 +103,11 @@ ng-map {
 
 .ui-view-container {
     display: inline;
+    padding: 15px 0;
 }
-
+.search-form-container {
+    padding: 19px;
+}
 .spinner-container {
     height: 50px;
     position: relative;
@@ -122,4 +125,12 @@ ng-map {
 
 .scrollable-div {
     overflow-y: scroll; 
+}
+
+blockquote {
+    margin: 0 0 10px;
+}
+
+blockquote a.remove-bookmark {
+    color: #E74C3C;
 }

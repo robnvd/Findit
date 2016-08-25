@@ -19,7 +19,8 @@
         service.getMapInstance = getMapInstance;
         service.getMapCenter = getMapCenter;
         service.setMapCenter = setMapCenter;
-        service.setMapCenterWithoutCenterMarker = setMapCenterWithoutCenterMarker;
+        service.setMapCenterWithCenterMarker = setMapCenterWithCenterMarker;
+        service.setMapCenterWithRadiusAndCenterMarker = setMapCenterWithRadiusAndCenterMarker;
 
         service.getMapPlacesService = getMapPlacesService;
         service.searchNearbyPlaces = searchNearbyPlaces;
@@ -89,13 +90,17 @@
 
         function setMapCenter(arg1, arg2) {
             _center(_mapInstace, arg1, arg2);
-            setRadiusCenter(arg1, arg2);
-            setCenterMarkerPosition(arg1, arg2);
         }
 
-        function setMapCenterWithoutCenterMarker(arg1, arg2) {
+        function setMapCenterWithCenterMarker(arg1, arg2) {
             _center(_mapInstace, arg1, arg2);
             setRadiusCenter(arg1, arg2);
+        }
+
+        function setMapCenterWithRadiusAndCenterMarker(arg1, arg2) {
+            _center(_mapInstace, arg1, arg2);
+            setRadiusCenter(arg1, arg2);
+            setCenterMarkerPosition(arg1, arg2);
         }
 
         //Map Places API

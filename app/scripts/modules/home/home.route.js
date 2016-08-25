@@ -16,16 +16,10 @@
             {
                 state: 'home',
                 config: {
-                    url: '/',
                     views: {
-                        'map': {
-                            templateUrl: 'templates/home/map.template.html',
+                        'main': {
+                            templateUrl: 'templates/home/map.tpl.html',
                             controller: 'mapController',
-                            controllerAs: 'vm',
-                        },
-                        'sidePanel': {
-                            templateUrl: 'templates/home/search.template.html',
-                            controller: 'searchController',
                             controllerAs: 'vm',
                         }
                     },
@@ -35,42 +29,36 @@
                 }
             },
             {
-                state: 'reviews',
+                state: 'home.search',
+                config: {
+                    url: '/',
+                    templateUrl: 'templates/home/search.tpl.html',
+                    controller: 'searchController',
+                    controllerAs: 'vm',
+                    sp: {
+                        authenticate: false
+                    }
+                }
+            },
+            {
+                state: 'home.reviews',
                 config: {
                     url: '/reviews',
-                    views: {
-                        'map': {
-                            templateUrl: 'templates/home/map.template.html',
-                            controller: 'mapController',
-                            controllerAs: 'vm',
-                        },
-                        'sidePanel': {
-                            templateUrl: 'templates/home/reviews.template.html',
-                            controller: 'reviewsController',
-                            controllerAs: 'vm',
-                        }
-                    },
+                    templateUrl: 'templates/home/reviews.tpl.html',
+                    controller: 'reviewsController',
+                    controllerAs: 'vm',
                     sp: {
                         authenticate: true
                     }
                 }
             },
             {
-                state: 'bookmarks',
+                state: 'home.bookmarks',
                 config: {
                     url: '/bookmarks',
-                    views: {
-                        'map': {
-                            templateUrl: 'templates/home/map.template.html',
-                            controller: 'mapController',
-                            controllerAs: 'vm',
-                        },
-                        'sidePanel': {
-                            templateUrl: 'templates/home/bookmarks.template.html',
-                            controller: 'bookmarksController',
-                            controllerAs: 'vm',
-                        }
-                    },
+                    templateUrl: 'templates/home/bookmarks.tpl.html',
+                    controller: 'bookmarksController',
+                    controllerAs: 'vm',
                     sp: {
                         authenticate: true
                     }
