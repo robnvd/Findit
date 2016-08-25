@@ -7,6 +7,8 @@
     function controller($scope, mapService, $uibModal) {
         var vm = this;
 
+        vm.types = ['geocode', 'establishment', 'address'];
+
         vm.searchData = {
             location: 'near',
             radius: 700
