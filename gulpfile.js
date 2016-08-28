@@ -4,7 +4,8 @@ const browserSync = require('browser-sync');
 const del = require('del');
 const wiredep = require('wiredep').stream;
 const replace = require('gulp-replace');
-const rename = require('gulp-replace');
+const argv = require('yargs').argv;
+const gulpif = require('gulp-if');
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
@@ -26,6 +27,8 @@ gulp.task('styles', () => {
 
 gulp.task('scripts', () => {
   return gulp.src('app/scripts/**/*.js')
+    .pipe(gulpif(argv.dev, replace('#apiendpoint#', 'http://localhost:3000')))
+    .pipe(gulpif(argv.prod, replace('#apiendpoint#', 'http://52.59.245.153')))
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe($.babel())
@@ -92,10 +95,18 @@ gulp.task('extras', () => {
     '!app/*.html'
   ], {
       dot: true
-    }).pipe(gulp.dest('dist'));
+    })
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
+
+gulp.task('replace', () => {
+  return gulp.src('app/scripts/modules/core/**/*.js')
+    .pipe(gulpif(argv.dev, replace('#apiendpoint#', 'http://localhost:3000')))
+    .pipe(gulpif(argv.prod, replace('#apiendpoint#', 'http://52.59.245.153')))
+    .pipe(gulp.dest('app/scripts/modules/core'));
+});
 
 gulp.task('serve', ['styles', 'scripts', 'fonts'], () => {
   browserSync({
@@ -168,36 +179,10 @@ gulp.task('wiredep', () => {
     .pipe(gulp.dest('app'));
 });
 
-// gulp.task('replace-core-config:prod', () => {
-//   return gulp.src('app/scripts/modules/core/core.config.js')
-//     .pipe(replace('!{api-endpoint}', 'http://52.59.245.153'))
-//     .pipe(gulp.dest('app/scripts/modules/core/core.config.js', { overwrite: true }));
-// });
-
-// gulp.task('replace-core-constants:prod', () => {
-//   return gulp.src('app/scripts/modules/core/core.config.js')
-//     .pipe(replace('!{api-endpoint}', 'http://52.59.245.153'))
-//     .pipe(gulp.dest('app/scripts/modules/core/core.config.js', { overwrite: true }));
-// });
-
-// gulp.task('replace-core-config:dev', () => {
-//   return gulp.src('app/scripts/modules/core/core.config.js')
-//     .pipe(replace('!{api-endpoint}', 'http://localhost:3000'))
-//     .pipe(gulp.dest('app/scripts/modules/core/core.config.js', { overwrite: true }));
-// });
-
-// gulp.task('replace-core-constants:dev', () => {
-//   return gulp.src('app/scripts/modules/core/core.config.js')
-//     .pipe(replace('!{api-endpoint}', 'http://localhost:3000'))
-//     .pipe(gulp.dest('app/scripts/modules/core/core.config.js', { overwrite: true }));
-// });
-
-// gulp.task('build:prod', ['replace-core-config:prod', 'replace-core-constants:prod', 'lint', 'html', 'images', 'fonts', 'extras'], () => {
-//   return gulp.src('dist/**/*').pipe($.size({ title: 'build', gzip: true }));
-// });
-// gulp.task('build:dev', ['replace-core-config:dev', 'replace-core-constants:dev', 'lint', 'html', 'images', 'fonts', 'extras'], () => {
-//   return gulp.src('dist/**/*').pipe($.size({ title: 'build', gzip: true }));
-// });
+gulp.task('default', function () {
+  return gulp.src('test.js')
+    .pipe(replace({ regex: 'Lorem', replace: 'DeLorean' }));
+});
 
 gulp.task('build', ['lint', 'html', 'images', 'fonts', 'extras'], () => {
   return gulp.src('dist/**/*').pipe($.size({ title: 'build', gzip: true }));
