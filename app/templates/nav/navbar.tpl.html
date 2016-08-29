@@ -13,7 +13,10 @@
         <div class="collapse navbar-collapse" id="navbar-menu">
             <ul class="nav navbar-nav navbar-right">
                 <li ui-sref-active="active"><a ui-sref="home.search">Home</a></li>
-                <li class="dropdown" if-user>
+                <li class="dropdown" if-user-state-unknown>
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Loading... <span class="caret"></span></a>
+                </li>
+                <li class="dropdown" if-user-state-known if-user>
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome {{vm.userData.username}} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li ui-sref-active="active"><a ui-sref="home.bookmarks">Bookmarks</a></li>

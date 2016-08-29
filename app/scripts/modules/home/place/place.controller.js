@@ -136,7 +136,7 @@
             angular.forEach(reviews, (review) => {
                 result.push({
                     author_name: review.createdBy,
-                    time: review.createdOn,
+                    time: Date.parse(review.createdOn) / 1000,
                     text: review.reviewText,
                     rating: review.rating
                 });

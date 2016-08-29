@@ -1,5 +1,5 @@
 <blockquote>
     <star-rating ng-model="vm.rating" readonly="true"></star-rating>
     <p>{{vm.reviewText}}</p>
-    <small>{{vm.author}} <cite title="Source Title">@ {{vm.createdOn | dateTime}}</cite></small>
+    <small>{{vm.author}} <cite title="Source Title">@ {{vm.createdOn | dateTimeUnix}}</cite></small>
 </blockquote>
