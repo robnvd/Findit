@@ -27,8 +27,6 @@ gulp.task('styles', () => {
 
 gulp.task('scripts', () => {
   return gulp.src('app/scripts/**/*.js')
-    .pipe(gulpif(argv.dev, replace('#apiendpoint#', 'http://localhost:3000')))
-    .pipe(gulpif(argv.prod, replace('#apiendpoint#', 'http://52.59.245.153')))
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe($.babel())
@@ -101,13 +99,6 @@ gulp.task('extras', () => {
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-gulp.task('replace', () => {
-  return gulp.src('app/scripts/modules/core/**/*.js')
-    .pipe(gulpif(argv.dev, replace('#apiendpoint#', 'http://localhost:3000')))
-    .pipe(gulpif(argv.prod, replace('#apiendpoint#', 'http://52.59.245.153')))
-    .pipe(gulp.dest('app/scripts/modules/core'));
-});
-
 gulp.task('serve', ['styles', 'scripts', 'fonts'], () => {
   browserSync({
     notify: false,
@@ -177,11 +168,6 @@ gulp.task('wiredep', () => {
       ignorePath: /^(\.\.\/)*\.\./
     }))
     .pipe(gulp.dest('app'));
-});
-
-gulp.task('default', function () {
-  return gulp.src('test.js')
-    .pipe(replace({ regex: 'Lorem', replace: 'DeLorean' }));
 });
 
 gulp.task('build', ['lint', 'html', 'images', 'fonts', 'extras'], () => {

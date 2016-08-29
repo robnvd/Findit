@@ -89,6 +89,7 @@ ng-map {
 
 .carousel-indicators {
     bottom: 0px;
+    margin-bottom: 0;
 }
 
 .carousel-indicators li {
@@ -152,3 +153,17 @@ blockquote a.remove-bookmark {
 .ng-cloak, .x-ng-cloak {
     opacity: 0;
 }
+
+.alert-success a {
+    color: #fff
+}
+
+@media all and (max-width:480px) {
+    .full-width { 
+        width: 100%; 
+        display:block; 
+    }
+    .full-width.margin-bottom {
+        margin-bottom: 5px;
+    }
+}  

@@ -6,7 +6,6 @@
   var config = {
     appErrorPrefix: '[Findit Error] ',
     appTitle: 'Findit',
-    urlPrefix: '#apiendpoint#',
     localStorageType: 'sessionStorage',
     localStoragePrefix: 'Findit.'
   };
@@ -21,10 +20,10 @@
   }
 
   core.config(authConfig);
-  authConfig.$inject = ['STORMPATH_CONFIG'];
+  authConfig.$inject = ['STORMPATH_CONFIG', 'baseUrl'];
   
-  function authConfig(STORMPATH_CONFIG) {
-    STORMPATH_CONFIG.ENDPOINT_PREFIX = config.urlPrefix;
+  function authConfig(STORMPATH_CONFIG, baseUrl) {
+    STORMPATH_CONFIG.ENDPOINT_PREFIX = baseUrl;
     STORMPATH_CONFIG.FORM_CONTENT_TYPE = 'application/json';
   }
 
