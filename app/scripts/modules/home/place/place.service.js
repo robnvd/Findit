@@ -5,8 +5,8 @@
         .module('Findit.Home')
         .service('placeService', placeService);
 
-    placeService.$inject = ['dataService', 'mapService', '$q', '$user', '$uibModal'];
-    function placeService(dataService, mapService, $q, $user, $uibModal) {
+    placeService.$inject = ['dataService', 'mapService', '$q', '$uibModal'];
+    function placeService(dataService, mapService, $q, $uibModal) {
         this.getGooglePlaceDetails = getGooglePlaceDetails;
         this.showPlaceDetails = showPlaceDetails;
         this.updateCachedPlace = updateCachedPlace;

@@ -5,8 +5,8 @@
         .module('Findit.Account')
         .controller('forgotController', forgotController);
 
-    forgotController.$inject = ['$user'];
-    function forgotController($user) {
+    forgotController.$inject = [];
+    function forgotController() {
         var vm = this;
         
 

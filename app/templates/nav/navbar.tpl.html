@@ -30,9 +30,9 @@
                         <li><a ui-sref="socialLogin">Facebook account</a></li>
                     </ul>
                 </li>-->
-                <li if-user><a href="" sp-logout>Log out</a></li>
-                <li if-not-user ui-sref-active="active"><a ui-sref="login">Log in</a></li>
-                <li if-not-user ui-sref-active="active"><a ui-sref="signup">Sign up</a></li>
+                <li><a href="">Log out</a></li>
+                <li ui-sref-active="active"><a ng-click="login()">Log in</a></li>
+                <li ui-sref-active="active"><a ui-sref="signup">Sign up</a></li>
             </ul>
         </div>
     </div>

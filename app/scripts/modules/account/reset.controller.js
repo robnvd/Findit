@@ -5,8 +5,8 @@
         .module('Findit.Account')
         .controller('resetController', resetController);
 
-    resetController.$inject = ['$user'];
-    function resetController($user) {
+    resetController.$inject = [];
+    function resetController() {
         var vm = this;
         
 

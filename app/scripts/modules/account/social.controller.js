@@ -5,8 +5,8 @@
         .module('Findit.Account')
         .controller('socialController', socialController);
 
-    socialController.$inject = ['$user'];
-    function socialController($user) {
+    socialController.$inject = [];
+    function socialController() {
         var vm = this;
         
 

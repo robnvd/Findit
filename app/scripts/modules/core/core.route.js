@@ -6,15 +6,15 @@
     .run(appRun);
 
 
-  appRun.$inject = ['routerHelper', '$stormpath'];
-  function appRun(routerHelper, $stormpath) {
+  appRun.$inject = ['routerHelper'];
+  function appRun(routerHelper) {
     var otherwise = '/404';
     routerHelper.configureStates(getStates(), otherwise);
 
-    $stormpath.uiRouter({
-      loginState: 'login',
-      defaultPostLoginState: 'home.search'
-    });
+    // $stormpath.uiRouter({
+    //   loginState: 'login',
+    //   defaultPostLoginState: 'home.search'
+    // });
   }
 
   function getStates() {

@@ -18,7 +18,7 @@
     }
 
     $locationProvider.html5Mode({
-      enabled: true,
+      // enabled: true,
       requireBase: true
     });
 

@@ -5,8 +5,8 @@
         .module('Findit.Home')
         .service('reviewsService', reviewsService);
 
-    reviewsService.$inject = ['dataService', '$user'];
-    function reviewsService(dataService, $user) {
+    reviewsService.$inject = ['dataService', 'authService'];
+    function reviewsService(dataService, authService) {
         this.getPersonReviews = getPersonReviews;
         this.getPlaceCustomReviews = getPlaceCustomReviews;
         this.addCustomReview = addCustomReview;
@@ -14,7 +14,7 @@
         ////////////////
 
         function getPersonReviews() {
-            return $user.get().then((user) => {
+            return authService.get().then((user) => {
                 return dataService.get(`Reviews/MyReviews?username=${user.username}`);
             }, (error) => {
                 return error;
