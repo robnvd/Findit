@@ -1,6 +1,6 @@
 (function () {
     angular
-        .module('Findit.Home')
+        .module('Findit.Map')
         .controller('mapController', controller);
 
     controller.$inject = ['$scope'];

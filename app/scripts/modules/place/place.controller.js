@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('Findit.Home')
+        .module('Findit.Place')
         .controller('placeController', controller);
 
     controller.$inject = ['place', 'refreshList', '$rootScope', 'placeService', 'reviewsService', 'bookmarksService', 'logger'];
@@ -72,7 +72,7 @@
         function _resolvePlaceBookmark(place) {
             return bookmarksService.getPlaceBookmark(place.place_id)
                 .then((response) => {
-                    vm.hideBookmark = response.data ? true : false;
+                    vm.hideBookmark = response && response.data ? true : false;
                     return place;
                 }, _handleError);
         }
@@ -92,6 +92,8 @@
         }
 
         function _resolveAddCustomReview(response) {
+            if(!response) return;
+            
             if (!vm.place.reviews) vm.place.reviews = [];
             vm.place.reviews.push(..._turnCustomReviewToGoogleReview([response.data]));
             logger.success('Review saved successfully!');

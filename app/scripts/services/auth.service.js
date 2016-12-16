@@ -9,7 +9,7 @@
     function authService(lock, authManager, $q, storage) {
         this.login = login;
         this.logout = logout;
-        this.get = get;
+        this.currentUser = currentUser;
         this.registerAuthenticationListener = registerAuthenticationListener;
 
         ////////////////
@@ -32,23 +32,24 @@
             authManager.unauthenticate();
         }
 
-        function get() {
+        function currentUser() {
             return deferredProfile.promise;
         }
 
         function registerAuthenticationListener() {
             lock.on('authenticated', function (authResult) {
 
-                lock.getProfile(authResult.idToken, function (error, profile) {
+                localStorage.setItem('id_token', authResult.idToken);
+                authManager.authenticate();
+
+                lock.getUserInfo(authResult.accessToken, function (error, profile) {
                     //todo change into tostr
                     if (error) return console.log(error);
 
                     localStorage.setItem('profile', JSON.stringify(profile));
                     deferredProfile.resolve(profile);
-                })
-                // storage.set('id_token', authResult.idToken);
-                localStorage.setItem('id_token', authResult.idToken);
-                authManager.authenticate();
+                });
+                //storage.set('id_token', authResult.idToken);
             });
         }
     }

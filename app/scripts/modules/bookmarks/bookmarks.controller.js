@@ -2,31 +2,38 @@
     'use strict';
 
     angular
-        .module('Findit.Home')
-        .controller('reviewsController', reviewsController);
+        .module('Findit.Bookmarks')
+        .controller('bookmarksController', bookmarksController);
 
-    reviewsController.$inject = ['reviewsService', 'placeService', 'mapService', '$uibModal', '$q', '$timeout', 'logger', '$scope'];
-    function reviewsController(reviewsService, placeService, mapService, $uibModal, $q, $timeout, logger, $scope) {
-        var vm = this;
-        vm.reviews = [];
+    bookmarksController.$inject = ['bookmarksService', 'placeService', 'mapService', 'logger', '$scope'];
+    function bookmarksController(bookmarksService, placeService, mapService, logger, $scope) {
+        let vm = this;
+        vm.bookmarks = [];
 
-        vm.showPlaceDetails = function (review) {
-            _markerClickCallback(review, true);
+        vm.showPlaceDetails = function (bookmark) {
+            _markerClickCallback(bookmark, true);
         };
 
-        vm.showPlaceOnMap = function (review) {
-            placeService.getGooglePlaceDetails(review.placeId)
+        vm.showPlaceOnMap = function (bookmark) {
+            placeService.getGooglePlaceDetails(bookmark.placeId)
                 .then((place) => {
                     mapService.clearMap();
                     mapService.setMapCenter(place.geometry.location);
                     mapService.setMapZoom(16);
                     mapService.addMarkerToMapForPlace(place, _markerClickCallback)
 
-                    _updateCachedPlaceData(review, place);
+                    _updateCachedPlaceData(bookmark, place);
                 }, _errorHandler);
         };
 
-        $scope.$on('reviews-count-changed', () => _init());
+        vm.removeBookmark = function (index) {
+            let bookmark = vm.bookmarks[index];
+            bookmarksService.removeFromBookmarks(bookmark.placeId)
+                .then(_resolveRemoveBookmark, _errorHandler);
+            vm.bookmarks.splice(index, 1);
+        };
+
+        $scope.$on('bookmarks-count-changed', () => _init());
 
         _init();
 
@@ -34,18 +41,22 @@
 
         function _init() {
             vm.dataIsLoading = true;
-            reviewsService.getPersonReviews()
-                .then(_resolveGetPersonReviews, _errorHandler)
+            bookmarksService.getPersonBookmarks()
+                .then(_resolveGetPersonBookmarks, _errorHandler)
                 .then(() => {
                     vm.dataIsLoading = false;
-                    vm.noData = vm.reviews.length <= 0;
+                    vm.noData = vm.bookmarks.length <= 0;
                 });
         }
 
-        function _resolveGetPersonReviews(response) {
-            if (response.data) {
-                vm.reviews = response.data;
+        function _resolveGetPersonBookmarks(response) {
+            if (response && response.data) {
+                vm.bookmarks = response.data;
             }
+        }
+
+        function _resolveRemoveBookmark() {
+            logger.success('Bookmark removed successfully!');
         }
 
         function _markerClickCallback(obj, loadPlace = false) {

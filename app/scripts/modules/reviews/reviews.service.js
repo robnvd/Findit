@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('Findit.Home')
+        .module('Findit.Reviews')
         .service('reviewsService', reviewsService);
 
     reviewsService.$inject = ['dataService', 'authService'];
@@ -14,15 +14,11 @@
         ////////////////
 
         function getPersonReviews() {
-            return authService.get().then((user) => {
-                return dataService.get(`Reviews/MyReviews?username=${user.username}`);
-            }, (error) => {
-                return error;
-            });
+            return dataService.get(`Reviews/MyReviews`);
         }
 
         function getPlaceCustomReviews(placeId) {
-            return dataService.get(`Reviews/PlaceReviews?placeId=${placeId}`);
+            return dataService.get(`Reviews/PlaceReviews/placeId=${placeId}`);
         }
 
         function addCustomReview(review) {

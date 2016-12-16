@@ -3,18 +3,31 @@
 
     angular
         .module('Findit.Account', ['Findit.Core'])
+        .config(config)
         .run(appRun);
 
-    appRun.$inject = ['$rootScope', '$state', 'logger'];
 
-    function appRun($rootScope, $state, logger) {
-        // $rootScope.$on('$sessionEnd', function () {
-        //     logger.success('Session ended')
-        //     $state.transitionTo('login');
-        // });
+    config.$inject = ['lockProvider', 'jwtOptionsProvider', '$httpProvider'];
+    function config(lockProvider, jwtOptionsProvider, $httpProvider) {
+        lockProvider.init({
+            clientID: '5zc4xm7BSkl3zPRAYq9Fga4v1HyZLRcx',
+            domain: 'robnvd.eu.auth0.com',
+            options: {
+                auth: {
+                    params: {
+                        scope: 'openid name email picture'
+                    }
+                }
+            }
+        });
+    }
 
-        // if (!$user.currentUser) {
-        //     $user.get();
-        // }
+    appRun.$inject = ['authService', 'authManager', 'lock'];
+
+    function appRun(authService, authManager, lock) {
+        authService.registerAuthenticationListener();
+        authManager.checkAuthOnRefresh();
+
+        lock.interceptHash();
     }
 })();

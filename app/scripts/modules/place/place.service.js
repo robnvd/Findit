@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('Findit.Home')
+        .module('Findit.Place')
         .service('placeService', placeService);
 
     placeService.$inject = ['dataService', 'mapService', '$q', '$uibModal'];
@@ -30,7 +30,7 @@
         function showPlaceDetails(place, refreshList = undefined) {
             return $uibModal.open({
                 backdrop: 'static',
-                templateUrl: 'templates/home/place.tpl.html',
+                templateUrl: 'templates/place.tpl.html',
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
                 size: 'lg',

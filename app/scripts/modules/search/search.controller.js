@@ -1,10 +1,10 @@
 (function () {
     angular
-        .module('Findit.Home')
+        .module('Findit.Search')
         .controller('searchController', controller);
 
-    controller.$inject = ['$scope', 'placeService', 'mapService'];
-    function controller($scope, placeService, mapService) {
+    controller.$inject = ['$scope', 'placeService', 'mapService', '$http'];
+    function controller($scope, placeService, mapService, $http) {
         var vm = this;
 
         vm.types = ['geocode', 'establishment', 'address'];

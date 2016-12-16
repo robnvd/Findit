@@ -10,15 +10,22 @@
   function appRun(routerHelper) {
     var otherwise = '/404';
     routerHelper.configureStates(getStates(), otherwise);
-
-    // $stormpath.uiRouter({
-    //   loginState: 'login',
-    //   defaultPostLoginState: 'home.search'
-    // });
   }
 
   function getStates() {
     return [
+      {
+        state: 'root',
+        config: {
+          views: {
+            'main': {
+              templateUrl: 'templates/map.tpl.html',
+              controller: 'mapController',
+              controllerAs: 'vm'
+            }
+          }
+        }
+      },
       {
         state: '404',
         config: {

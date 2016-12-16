@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('Findit.Home')
+        .module('Findit.Reviews')
         .directive('starRating', starRating);
 
     function starRating() {

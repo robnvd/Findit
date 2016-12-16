@@ -2,9 +2,13 @@
 
     angular.module('Findit', [
         'Findit.Core',
-        'Findit.Home',
         'Findit.Account',
-        'Findit.Nav'
+        'Findit.Bookmarks',
+        'Findit.Map',
+        'Findit.Nav',
+        'Findit.Place',
+        'Findit.Reviews',
+        'Findit.Search',
     ]);
     
 })();

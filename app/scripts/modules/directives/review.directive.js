@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('Findit.Home')
+        .module('Findit.Reviews')
         .directive('review', review);
 
     function review() {
@@ -12,7 +12,7 @@
         //
         var directive = {
             bindToController: true,
-            templateUrl: 'templates/home/review.tpl.html',
+            templateUrl: 'templates/review.tpl.html',
             controller: directiveController,
             controllerAs: 'vm',
             link: linkFunction,

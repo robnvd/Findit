@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('Findit.Home')
+        .module('Findit.Map')
         .factory('mapService', mapService);
 
     mapService.$inject = ['NgMap', '$geolocation', '$q', 'searchResultTypes'];
