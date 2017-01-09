@@ -12,16 +12,12 @@
         this.currentUser = currentUser;
         this.registerAuthenticationListener = registerAuthenticationListener;
 
-        ////////////////
-
         var userProfile = JSON.parse(localStorage.getItem('profile')) || null;
         var deferredProfile = $q.defer();
 
         if (userProfile) {
             deferredProfile.resolve(userProfile);
         }
-
-        ////////////////
 
         function login() {
             lock.show();
@@ -43,13 +39,11 @@
                 authManager.authenticate();
 
                 lock.getUserInfo(authResult.accessToken, function (error, profile) {
-                    //todo change into tostr
                     if (error) return console.log(error);
 
                     localStorage.setItem('profile', JSON.stringify(profile));
                     deferredProfile.resolve(profile);
                 });
-                //storage.set('id_token', authResult.idToken);
             });
         }
     }
