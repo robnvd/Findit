@@ -18,7 +18,7 @@
         }
 
         function getPlaceCustomReviews(placeId) {
-            return dataService.get(`Reviews/PlaceReviews/placeId=${placeId}`);
+            return dataService.get(`Reviews/PlaceReviews/${placeId}`);
         }
 
         function addCustomReview(review) {

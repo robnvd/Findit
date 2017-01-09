@@ -15,7 +15,7 @@
         };
 
         vm.showPlaceOnMap = function (review) {
-            placeService.getGooglePlaceDetails(review.placeId)
+            placeService.getGooglePlaceDetails(review.place.placeId)
                 .then((place) => {
                     mapService.clearMap();
                     mapService.setMapCenter(place.geometry.location);
@@ -50,7 +50,7 @@
 
         function _markerClickCallback(obj, loadPlace = false) {
             if (loadPlace === true) {
-                placeService.getGooglePlaceDetails(obj.placeId)
+                placeService.getGooglePlaceDetails(obj.place.placeId)
                     .then((place) => {
                         placeService.showPlaceDetails(place, _init);
                         _updateCachedPlaceData(obj, place);
