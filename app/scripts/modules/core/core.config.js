@@ -30,9 +30,9 @@
 
   core.config(configure);
   configure.$inject = ['$logProvider', 'routerHelperProvider', 'exceptionHandlerProvider', 
-    'jwtOptionsProvider', '$httpProvider'];
+    'jwtOptionsProvider', '$httpProvider', 'auth0WhiteList'];
 
-  function configure($logProvider, routerHelperProvider, exceptionHandlerProvider, jwtOptionsProvider, $httpProvider) {
+  function configure($logProvider, routerHelperProvider, exceptionHandlerProvider, jwtOptionsProvider, $httpProvider, auth0WhiteList) {
     if ($logProvider.debugEnabled) {
       $logProvider.debugEnabled(true);
     }
@@ -46,7 +46,7 @@
         }
         return localStorage.getItem('id_token');
       }],
-      whiteListedDomains: ['localhost', 'localhost:5000']
+      whiteListedDomains: auth0WhiteList
     });
 
     $httpProvider.interceptors.push('jwtInterceptor');

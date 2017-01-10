@@ -3,12 +3,9 @@
         <form name="searchForm" class="form-horizontal" novalidate ng-submit="vm.search()">
             <fieldset>
                 <legend>Search places</legend>
-                <div class="form-group" id="place-placeholder" ng-class="{ 'has-error': searchForm.place.$invalid && (searchForm.place.$dirty || searchForm.place.$touched || searchForm.$submitted) }">
+                <div class="form-group" id="place-placeholder">
                     <label for="place" class="control-label">Place</label>
-                    <input type="text" class="form-control" name="place" id="place" placeholder="McDonald's" required ng-model="vm.searchData.place"/>
-                    <div class="help-block" ng-messages="searchForm.place.$error" ng-show="searchForm.place.$dirty || searchForm.place.$touched || searchForm.$submitted">
-                        <div ng-messages-include="templates/core/error-messages.tpl.html"></div>
-                    </div>
+                    <input type="text" class="form-control" name="place" id="place" placeholder="McDonald's" ng-model="vm.searchData.place"/>
                 </div>
                 <div class="form-group" ng-class="{ 'has-error': searchForm.radius.$invalid && (searchForm.radius.$dirty || searchForm.radius.$touched || searchForm.$submitted) }">
                     <label for="radius" class="control-label">Radius</label>

@@ -50,6 +50,8 @@
             vm.search = () => {
                 if(vm.searchData.place && vm.searchData.place.length > 0) {
                     mapService.searchPlacesByText(vm.searchData.place).then(_resolvePlaces, _handleErrors)
+                } else {
+                    mapService.searchNearbyPlaces().then(_resolvePlaces, _handleErrors);
                 }
             }
 

@@ -7,11 +7,11 @@
         .run(appRun);
 
 
-    config.$inject = ['lockProvider', 'jwtOptionsProvider', '$httpProvider'];
-    function config(lockProvider, jwtOptionsProvider, $httpProvider) {
+    config.$inject = ['lockProvider', 'jwtOptionsProvider', '$httpProvider', 'auth0ClientID', 'auth0Domain'];
+    function config(lockProvider, jwtOptionsProvider, $httpProvider, auth0ClientID, auth0Domain) {
         lockProvider.init({
-            clientID: '5zc4xm7BSkl3zPRAYq9Fga4v1HyZLRcx',
-            domain: 'robnvd.eu.auth0.com',
+            clientID: auth0ClientID,
+            domain: auth0Domain,
             options: {
                 auth: {
                     params: {
