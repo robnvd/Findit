@@ -5,8 +5,8 @@
         .module('Findit.Core')
         .service('authService', authService);
 
-    authService.$inject = ['lock', 'authManager', '$q', 'storage'];
-    function authService(lock, authManager, $q, storage) {
+    authService.$inject = ['lock', 'authManager', '$q', 'storage', '$state'];
+    function authService(lock, authManager, $q, storage, $state) {
         this.login = login;
         this.logout = logout;
         this.currentUser = currentUser;
@@ -43,6 +43,8 @@
 
                     localStorage.setItem('profile', JSON.stringify(profile));
                     deferredProfile.resolve(profile);
+
+                    $state.go('root.search');
                 });
             });
         }

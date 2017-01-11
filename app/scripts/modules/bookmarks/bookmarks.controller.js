@@ -27,10 +27,13 @@
         };
 
         vm.removeBookmark = function (index) {
+            debugger;
             let bookmark = vm.bookmarks[index];
             bookmarksService.removeFromBookmarks(bookmark.placeId)
-                .then(_resolveRemoveBookmark, _errorHandler);
-            vm.bookmarks.splice(index, 1);
+                .then(() => {
+                    vm.bookmarks.splice(index, 1);
+                    logger.success('Bookmark removed successfully!');
+                }, _errorHandler);
         };
 
         $scope.$on('bookmarks-count-changed', () => _init());
@@ -50,13 +53,10 @@
         }
 
         function _resolveGetPersonBookmarks(response) {
+            debugger;
             if (response && response.data) {
                 vm.bookmarks = response.data;
             }
-        }
-
-        function _resolveRemoveBookmark() {
-            logger.success('Bookmark removed successfully!');
         }
 
         function _markerClickCallback(obj, loadPlace = false) {

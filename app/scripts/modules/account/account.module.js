@@ -16,7 +16,8 @@
                 auth: {
                     params: {
                         scope: 'openid name email picture'
-                    }
+                    },
+                    redirect: false
                 }
             }
         });

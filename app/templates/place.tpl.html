@@ -8,7 +8,7 @@
     <div class="spinner-container" ng-show="vm.dataIsLoading">
         <span us-spinner spinner-on="vm.dataIsLoading"></span>
     </div>
-    <div class="container-fluid" ng-hide="vm.dataIsLoading">
+    <div class="container-fluid ng-hide" ng-hide="vm.dataIsLoading">
         <p ng-show="vm.place.formatted_address || vm.place.vicinity">Address: {{vm.place.formatted_address ? vm.place.formatted_address : vm.place.vicinity}}</p>
         <p ng-show="vm.place.formatted_phone_number">Phone: {{vm.place.formatted_phone_number}}</p>
         <p ng-show="vm.place.html_attributions.length > 0">Links: <span ng-repeat="attr in vm.place.html_attributions">{{attr}}</span></p>
@@ -52,7 +52,7 @@
 <div class="modal-footer">
     <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-8 col-lg-8 full-width text-left">
-            <div ng-hide="vm.dataIsLoading">
+            <div class="ng-hide" ng-hide="vm.dataIsLoading">
                 <span ng-if="!isAuthenticated">
                     <button type="button" ng-hide="vm.hideBookmark" class="btn btn-danger full-width margin-bottom text-left" disabled="disabled">
                         <i class="fa fa-heart" aria-hidden="true"></i> Add to bookmarks
