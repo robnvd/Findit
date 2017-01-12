@@ -27,11 +27,11 @@
         };
 
         vm.removeBookmark = function (index) {
-            debugger;
             let bookmark = vm.bookmarks[index];
             bookmarksService.removeFromBookmarks(bookmark.placeId)
                 .then(() => {
                     vm.bookmarks.splice(index, 1);
+                    vm.noData = vm.bookmarks.length <= 0;
                     logger.success('Bookmark removed successfully!');
                 }, _errorHandler);
         };
@@ -53,7 +53,6 @@
         }
 
         function _resolveGetPersonBookmarks(response) {
-            debugger;
             if (response && response.data) {
                 vm.bookmarks = response.data;
             }
