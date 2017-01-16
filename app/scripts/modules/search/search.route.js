@@ -19,10 +19,7 @@
                     url: '/',
                     templateUrl: 'templates/search.tpl.html',
                     controller: 'searchController',
-                    controllerAs: 'vm',
-                    sp: {
-                        authenticate: false
-                    }
+                    controllerAs: 'vm'
                 }
             }
         ];

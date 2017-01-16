@@ -5,8 +5,8 @@
         .module('Findit.Map')
         .factory('mapService', mapService);
 
-    mapService.$inject = ['NgMap', '$geolocation', '$q', 'searchResultTypes'];
-    function mapService(NgMap, $geolocation, $q, searchResultTypes) {
+    mapService.$inject = ['NgMap', '$geolocation', '$q', 'searchResultTypes', 'placeService', 'logger'];
+    function mapService(NgMap, $geolocation, $q, searchResultTypes, placeService, logger) {
         let service = {};
 
         let _mapInstace = null;
@@ -15,7 +15,10 @@
         let _centerMarker = null;
         let _options = null;
 
+        service.mapInitialized = false;
+
         service.init = init;
+        service.showPlacesOnMap = showPlacesOnMap;
 
         service.getMapInstance = getMapInstance;
         service.getMapCenter = getMapCenter;
@@ -23,7 +26,6 @@
         service.setMapCenter = setMapCenter;
         service.setMapZoom = setMapZoom;
 
-        service.getMapPlacesService = getMapPlacesService;
         service.searchNearbyPlaces = searchNearbyPlaces;
         service.searchPlacesByText = searchPlacesByText;
 
@@ -57,8 +59,7 @@
                 }
                 if (location) {
                     _center(_mapInstace, location.coords.latitude, location.coords.longitude);
-                }
-                else {
+                } else {
                     _center(_mapInstace, 44.4267674, 26.102538399999958);
                 }
                 setMapZoom(16);
@@ -87,13 +88,32 @@
             });
 
             google.maps.event.addListener(marker, 'dragend', () => {
-                if (_options.centerMarkerDragEndedCallback) {
-                    _options.centerMarkerDragEndedCallback(marker);
-                }
+                _centerMarkerDragEndedCallback(marker);
             });
 
             return marker;
         }
+
+        function _centerMarkerDragEndedCallback(centerMarker) {
+            const center = centerMarker.getPosition();
+            setMapCenter(center, null, true, true);
+            clearAllMarkers();
+            searchNearbyPlaces().then(showPlacesOnMap, _logErrors);
+        }
+
+        function showPlacesOnMap(results) {
+            clearAllMarkers();
+            const center = getMapCenter();
+            for (let i = 0; i < results.length; i++) {
+                if (google.maps.geometry.spherical.computeDistanceBetween(results[i].geometry.location, center) <= _options.radius) {
+                    addMarkerToMapForPlace(results[i], _markerClickCallback);
+                }
+            }
+        }
+
+        function _markerClickCallback(place) {
+            placeService.showPlaceDetails(place);
+        };
 
         function _createRadius() {
             return new google.maps.Circle({
@@ -149,16 +169,9 @@
             }
         }
 
-        //Map Places API
-        function getMapPlacesService() {
-            return getMapInstance().then((map) => {
-                return new google.maps.places.PlacesService(map)
-            });
-        }
-
         function searchNearbyPlaces() {
             var deferred = $q.defer();
-            getMapPlacesService().then((service) => {
+            placeService.getMapPlacesService().then((service) => {
                 service.nearbySearch({
                     location: _mapInstace.getCenter(),
                     radius: _radius.getRadius(),
@@ -176,7 +189,7 @@
 
         function searchPlacesByText(query) {
             var deferred = $q.defer();
-            getMapPlacesService().then((service) => {
+            placeService.getMapPlacesService().then((service) => {
                 service.textSearch({
                     location: _mapInstace.getCenter(),
                     radius: _radius.getRadius(),
@@ -254,6 +267,10 @@
             } else {
                 obj.setCenter(arg1);
             }
+        }
+
+        function _logErrors(err) {
+            logger.error(err);
         }
 
         return service;

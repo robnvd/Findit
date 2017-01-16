@@ -5,17 +5,18 @@
         .module('Findit.Place')
         .service('placeService', placeService);
 
-    placeService.$inject = ['dataService', 'mapService', '$q', '$uibModal'];
-    function placeService(dataService, mapService, $q, $uibModal) {
+    placeService.$inject = ['NgMap', 'dataService', '$q', '$uibModal'];
+    function placeService(NgMap, dataService, $q, $uibModal) {
         this.getGooglePlaceDetails = getGooglePlaceDetails;
         this.showPlaceDetails = showPlaceDetails;
         this.updateCachedPlace = updateCachedPlace;
+        this.getMapPlacesService = getMapPlacesService
 
         ////////////////
 
         function getGooglePlaceDetails(placeId) {
             const deferred = $q.defer();
-            mapService.getMapPlacesService().then((service) => {
+            getMapPlacesService().then((service) => {
                 service.getDetails({ placeId: placeId }, (place, status) => {
                     if (status === google.maps.places.PlacesServiceStatus.OK) {
                         deferred.resolve(place);
@@ -52,6 +53,12 @@
                 location: JSON.stringify(place.geometry.location)
             };
             return dataService.put('Places/UpdateCachedPlace', dto);
+        }
+
+        function getMapPlacesService() {
+            return NgMap.getMap().then((map) => {
+                return new google.maps.places.PlacesService(map)
+            });
         }
     }
 })();

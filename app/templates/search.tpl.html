@@ -5,12 +5,12 @@
                 <legend>Search places</legend>
                 <div class="form-group" id="place-placeholder">
                     <label for="place" class="control-label">Place</label>
-                    <input type="text" class="form-control" name="place" id="place" placeholder="McDonald's" ng-model="vm.searchData.place"/>
+                    <input type="text" class="form-control" name="place" id="place" placeholder="McDonald's" ng-model="vm.searchData.place" />
                 </div>
                 <div class="form-group" ng-class="{ 'has-error': searchForm.radius.$invalid && (searchForm.radius.$dirty || searchForm.radius.$touched || searchForm.$submitted) }">
                     <label for="radius" class="control-label">Radius</label>
                     <input type="number" class="form-control" name="radius" id="radius" ng-model="vm.searchData.radius" placeholder="700 meters"
-                        required>
+                        ng-change="vm.radiusChange()" required>
                     <div class="help-block" ng-messages="searchForm.radius.$error" ng-show="searchForm.radius.$dirty || searchForm.radius.$touched || searchForm.$submitted">
                         <div ng-messages-include="templates/core/error-messages.tpl.html"></div>
                     </div>
@@ -29,8 +29,13 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="col-lg-12">
-                        <button type="submit" class="btn btn-block btn-primary">Search</button>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <button type="submit" class="btn btn-block btn-primary">Search</button>
+                        </div>
+                        <div class="col-lg-4">
+                            <button type="button" ng-click="vm.reset()" class="btn btn-block btn-default">Reset</button>
+                        </div>
                     </div>
                 </div>
             </fieldset>

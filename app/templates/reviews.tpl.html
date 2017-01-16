@@ -4,15 +4,28 @@
     </div>
     <div ng-hide="vm.dataIsLoading">
         <div ng-repeat="review in vm.reviews">
-            <blockquote>
-                <star-rating ng-model="review.rating" readonly="true"></star-rating>
-                <p>{{review.reviewText}}</p>
-                <small>{{review.place.name}}
-                    <span class="small-text">(<a href="" ng-click="vm.showPlaceDetails(review)">Details</a></span> | 
-                    <span class="small-text"><a href="" ng-click="vm.showPlaceOnMap(review)">View on map</a>)</span> 
-                    <cite title="Source Title">@ {{review.createdOn | dateTime}}</cite>
-                </small>
-            </blockquote>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h1 class="panel-title text-center">
+                        <a href="" ng-click="vm.showPlaceDetails(review)">{{review.place.name}}</a>
+                    </h1>
+                </div>
+                <div class="panel-body">
+                    <div class="container-fluid">
+                        <div class="text-center">
+                            <star-rating rating="review.rating" readonly="true"></star-rating>
+                        </div>
+                        <div class="text-center">
+                            {{review.reviewText}}
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer panel-footer-small">
+                    <small>
+                        - added @ {{review.createdOn | dateTime}} | <a href="" ng-click="vm.showPlaceOnMap(review)">View on map</a>
+                    </small>
+                </div>
+            </div>
         </div>
     </div>
     <div ng-show="vm.noData" ng-cloak>

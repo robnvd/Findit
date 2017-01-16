@@ -15,6 +15,11 @@
         vm.hideReviews = true;
 
         vm.addReviewToggle = false;
+        vm.addBookmarkToggle = false;
+
+        vm.bookmark = {
+            note: null
+        };
         vm.newReview = {
             placeId: place.place_id,
             rating: 5,
@@ -24,6 +29,11 @@
                 address: place.formatted_address ? place.formatted_address : place.vicinity,
                 location: JSON.stringify(place.geometry.location)
             }
+        };
+
+        vm.toggleAddBookmark = () => {
+            _resetBookmarkForm();
+            vm.addBookmarkToggle = !vm.addBookmarkToggle;
         };
 
         vm.toggleAddReview = () => {
@@ -44,7 +54,8 @@
                     name: place.name,
                     address: place.formatted_address ? place.formatted_address : place.vicinity,
                     location: JSON.stringify(place.geometry.location)
-                }
+                },
+                bookmarkText: vm.bookmark.note
             }).then(_resolveAddToBookmarks, _handleError);
         };
 
@@ -110,6 +121,7 @@
         function _resolveAddToBookmarks() {
             logger.success('Bookmark saved successfully!');
             vm.hideBookmark = true;
+            vm.addBookmarkToggle = false;
             if (refreshList) {
                 refreshList();
             } else {
@@ -144,6 +156,10 @@
                 });
             });
             return result;
+        }
+
+        function _resetBookmarkForm() {
+            vm.bookmark.note = null;
         }
 
         function _resetReviewForm() {

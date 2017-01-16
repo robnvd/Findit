@@ -10,6 +10,7 @@
         this.getPersonBookmarks = getPersonBookmarks;
         this.getPlaceBookmark = getPlaceBookmark;
         this.addToBookmarks = addToBookmarks;
+        this.updateBookmark = updateBookmark;
         this.removeFromBookmarks = removeFromBookmarks;
 
         ////////////////
@@ -24,6 +25,10 @@
 
         function addToBookmarks(bookmark) {
             return dataService.post(`Bookmarks/AddBookmark`, bookmark);
+        }
+
+        function updateBookmark(bookmark) {
+            return dataService.put(`Bookmarks/UpdateBookmark`, bookmark);
         }
 
         function removeFromBookmarks(placeId) {

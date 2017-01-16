@@ -4,27 +4,48 @@
     </div>
     <div ng-hide="vm.dataIsLoading">
         <div ng-repeat="bookmark in vm.bookmarks">
-            <blockquote>
-                <p>
-                    {{bookmark.place.name}} 
-                    <span class="small-text">(<a href="" ng-click="vm.showPlaceDetails(bookmark)">Details</a>)</span>
-                </p>
-                <p>
-                    {{bookmark.place.address}} 
-                    <span class="small-text">(<a href="" ng-click="vm.showPlaceOnMap(bookmark)">View on map</a>)</span>
-                </p>
-                <small>
-                    added @ {{bookmark.createdOn | dateTime}} | 
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h1 class="panel-title text-center">
+                        <a href="" ng-click="vm.showPlaceDetails(bookmark)">{{bookmark.place.name}}</a>
+                    </h1>
+                </div>
+                <div class="panel-body">
+                    <div class="container-fluid">
+                        <p>
+                            <strong>Notes:</strong> <span ng-hide="vm.showAsField[$index]">{{bookmark.bookmarkText}}
+                            <small ng-show="bookmark.bookmarkText">(<a href="" ng-click="vm.toggleEditNote($index)">edit</a>)</small>
+                            <small ng-hide="bookmark.bookmarkText"><a href="" ng-click="vm.toggleEditNote($index)">add</a></small>
+                            </span>
+                            <div ng-if="vm.showAsField[$index]" class="bookmark-note-form">
+                                <textarea name="bookmarkNote" id="bookmarkNote" 
+                                        ng-model="vm.bookmarks[$index].bookmarkText"
+                                        placeholder="Bookmark note."
+                                        class="form-control" rows="3"></textarea>
+                                <button type="button" ng-click="vm.saveBookmarkNote($index)" class="btn btn-primary btn-sm">Save</button>
+                                <button type="button" ng-click="vm.toggleEditNote($index)" class="btn btn-warning btn-sm">Cancel</button>
+                            </div>
+
+                        </p>
+                        <p>
+                           <strong>Address:</strong> <a href="" ng-click="vm.showPlaceOnMap(bookmark)">{{bookmark.place.address}}</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="panel-footer panel-footer-small">
+                    <small>
+                        - added @ {{bookmark.createdOn | dateTime}} | 
                     <a href="" confirm="Are you sure you want to remove the bookmark?"
                             confirm-setting="{ size: 'sm' }" confirm-title="Remove bookmark" confirm-ok="Yes" 
                             confirm-cancel="No" ng-click="vm.removeBookmark($index)" class="remove-bookmark">Remove bookmark :(</a>
-                </small>
-            </blockquote>
+                    </small>
+                </div>
+            </div>
         </div>
     </div>
     <div ng-show="vm.noData" ng-cloak>
         <span class="centered">
-            <h2>No bookmarks :(</h2>
+            <h2 class="text-center">No bookmarks :(</h2>
         </span>
     </div>
 </div>

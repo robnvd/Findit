@@ -15,11 +15,11 @@
         <p ng-show="vm.place.permanently_closed">Place is closed: {{vm.place.permanently_closed | boolean}}</p>
         <p ng-show="vm.place.price_level">Expensivness: {{vm.place.price_level}}</p>
         <p ng-show="vm.place.rating">Rating:
-            <star-rating ng-model="vm.place.rating" readonly="true" max="5"></star-rating>
+            <star-rating rating="vm.place.rating" readonly="true" max="5"></star-rating>
         </p>
-        <p ng-show="vm.place.types.length > 0">Types: <span ng-repeat="type in vm.place.types"> {{type}} </span></p>
-        <p ng-show="vm.place.url">Google page: <a href="{{vm.place.url}}" target="__blank">ClickHere</a></p>
-        <p ng-show="vm.place.website">Webpage: <a href="{{vm.place.website}}" target="__blank">Webpage</a></p>
+        <!--<p ng-show="vm.place.types.length > 0">Types: <span ng-repeat="type in vm.place.types"> {{type}} </span></p>-->
+        <p ng-show="vm.place.url">View in Google Maps: <a href="{{vm.place.url}}" target="__blank">ClickHere</a></p>
+        <p ng-show="vm.place.website">Webpage: <a href="{{vm.place.website}}" target="__blank">{{vm.place.website}}</a></p>
         <p ng-show="vm.place.opening_hours.length > 0">Opening hours (Open Now: {{vm.place.opening_hours.open_now | boolean}}): <span ng-repeat="hour in vm.place.opening_hours.weekday_text">{{hour}}</span></p>
         <p ng-show="vm.place.photos.length > 0">
             Photos ({{vm.place.photos.length || 0}}):
@@ -53,60 +53,73 @@
     <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-8 col-lg-8 full-width text-left">
             <div class="ng-hide" ng-hide="vm.dataIsLoading">
-                <span ng-if="!isAuthenticated">
-                    <button type="button" ng-hide="vm.hideBookmark" class="btn btn-danger full-width margin-bottom text-left" disabled="disabled">
+                <button type="button" ng-hide="vm.hideBookmark || vm.addBookmarkToggle" 
+                        class="btn btn-danger full-width margin-bottom text-left" 
+                        ng-disabled="!isAuthenticated"
+                        ng-click="vm.toggleAddBookmark()">
                         <i class="fa fa-heart" aria-hidden="true"></i> Add to bookmarks
                     </button>
-                    <button type="button" ng-show="vm.hideBookmark" class="btn btn-default full-width margin-bottom text-left" disabled="disabled">
+                <button type="button" ng-show="vm.hideBookmark" 
+                        class="btn btn-default full-width margin-bottom text-left" 
+                        ng-disabled="!isAuthenticated"
+                        ng-click="vm.removeFromBookmarks()" 
+                        confirm="Are you sure you want to remove the bookmark?" 
+                        confirm-setting="{ size: 'sm' }"
+                        confirm-title="Remove bookmark" 
+                        confirm-ok="Yes" 
+                        confirm-cancel="No">
                         <i class="fa fa-frown-o" aria-hidden="true"></i> Remove bookmark
                     </button>
-                </span>
-                <span ng-if="isAuthenticated">
-                    <button type="button" ng-hide="vm.hideBookmark" class="btn btn-danger full-width margin-bottom text-left" ng-click="vm.addToBookmarks()">
-                        <i class="fa fa-heart" aria-hidden="true"></i> Add to bookmarks
-                    </button>
-                    <button type="button" ng-show="vm.hideBookmark" class="btn btn-default full-width margin-bottom text-left" 
-                            ng-click="vm.removeFromBookmarks()" confirm="Are you sure you want to remove the bookmark?"
-                            confirm-setting="{ size: 'sm' }" confirm-title="Remove bookmark" confirm-ok="Yes" confirm-cancel="No">
-                        <i class="fa fa-frown-o" aria-hidden="true"></i> Remove bookmark
-                    </button>
-                </span>
             </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 full-width">
-            <span ng-if="!isAuthenticated">
-                <button type="button" class="btn btn-success full-width margin-bottom" ng-hide="vm.addReviewToggle" disabled="disabled">Add review</button>
-            </span>
-            <span ng-if="isAuthenticated">
-                <button type="button" class="btn btn-success full-width margin-bottom" ng-hide="vm.addReviewToggle" ng-click="vm.toggleAddReview()">Add review</button>
-            </span>
+            <button type="button" class="btn btn-success full-width margin-bottom" ng-disabled="!isAuthenticated" 
+                ng-hide="vm.addReviewToggle" ng-click="vm.toggleAddReview()">Add review</button>
             <button type="button" class="btn btn-primary full-width" ng-click="$close()">Close</button>
         </div>
     </div>
+</div>
+<div uib-collapse="!vm.addBookmarkToggle" class="add-review-container fade">
+    <fieldset>
+        <div class="form-group">
+            <label for="textArea" class="col-lg-2 control-label">Bookmark note:</label>
+            <div class="col-lg-10">
+                <textarea name="bookmarkNote" id="bookmarkNote" 
+                    placeholder="Bookmark note."
+                    ng-model="vm.bookmark.note" 
+                    class="form-control" rows="3"></textarea>
+                <span class="help-block"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button type="button" class="btn btn-success" ng-disabled="!isAuthenticated" ng-click="vm.addToBookmarks()">Add to bookmarks</button>
+                <button type="button" class="btn btn-warning" ng-click="vm.toggleAddBookmark()">Cancel</button>
+            </div>
+        </div>
+    </fieldset>
 </div>
 <div uib-collapse="!vm.addReviewToggle" class="add-review-container fade">
     <fieldset>
         <div class="form-group">
             <label for="textArea" class="col-lg-2 control-label">Rating:</label>
             <div class="col-lg-10">
-                <star-rating ng-model="vm.newReview.rating" max="5"></star-rating>
+                <star-rating rating="vm.newReview.rating" max="5"></star-rating>
             </div>
         </div>
         <div class="form-group">
             <label for="textArea" class="col-lg-2 control-label">Review:</label>
             <div class="col-lg-10">
-                <textarea name="newReviewText" id="newReviewText" ng-model="vm.newReview.reviewText" class="form-control" rows="3"></textarea>
+                <textarea name="newReviewText" id="newReviewText" 
+                    ng-model="vm.newReview.reviewText" 
+                    placeholder="Review text."
+                    class="form-control" rows="3"></textarea>
                 <span class="help-block">Watch your language.</span>
             </div>
         </div>
         <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
-                <span ng-if="!isAuthenticated">
-                    <button type="button" class="btn btn-success" disabled="disabled">Add review</button>
-                </span>
-                <span ng-if="isAuthenticated">
-                    <button type="button" class="btn btn-success" ng-click="vm.saveReview()">Add review</button>
-                </span>
+                <button type="button" class="btn btn-success" ng-disabled="!isAuthenticated" ng-click="vm.saveReview()">Add review</button>
                 <button type="button" class="btn btn-warning" ng-click="vm.toggleAddReview() ">Cancel</button>
             </div>
         </div>

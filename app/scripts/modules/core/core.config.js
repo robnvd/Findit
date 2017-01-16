@@ -51,4 +51,12 @@
 
     $httpProvider.interceptors.push('jwtInterceptor');
   }
+
+  core.config(configureBlockUi);
+  configureBlockUi.$inject = ['blockUIConfig'];
+  function configureBlockUi(blockUIConfig) {
+    blockUIConfig.autoInjectBodyBlock = false;
+    blockUIConfig.autoBlock = false;
+    blockUIConfig.message = 'Map is loading...';
+  }
 })();

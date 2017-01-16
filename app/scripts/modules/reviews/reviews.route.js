@@ -19,10 +19,7 @@
                     url: '/reviews',
                     templateUrl: 'templates/reviews.tpl.html',
                     controller: 'reviewsController',
-                    controllerAs: 'vm',
-                    sp: {
-                        authenticate: true
-                    }
+                    controllerAs: 'vm'
                 }
             }
         ];

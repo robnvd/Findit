@@ -7,7 +7,7 @@
 
     function starRating() {
         return {
-            restrict: 'EA',
+            restrict: 'E',
             template:
             '<ul class="star-rating" ng-class="{readonly: readonly}">' +
             '  <li ng-repeat="star in stars" class="star" ng-class="{filled: star.filled}" ng-click="toggle($index)">' +
@@ -15,39 +15,40 @@
             '  </li>' +
             '</ul>',
             scope: {
-                ratingValue: '=ngModel',
+                rating: '=',
                 max: '=?', // optional (default is 5)
                 onRatingSelect: '&?',
                 readonly: '=?'
             },
-            link: function (scope, element, attributes) {
-                if (scope.max == undefined) {
-                    scope.max = 5;
-                }
+            controller: ['$scope', function ($scope) {
+
+                var max = $scope.max || 5;
+                $scope.rating = $scope.rating || 5;
+                $scope.stars = [];
+
+                $scope.toggle = function (index) {
+                    if ($scope.readonly && $scope.readonly == true) return;
+
+                    $scope.rating = index + 1;
+
+                    if ($scope.onRatingSelect) {
+                        $scope.onRatingSelect({ rating: index + 1 });
+                    }
+                };
+
+                $scope.$watch('rating', function (newValue, oldValue) {
+                    if (newValue) updateStars();
+                });
+
                 function updateStars() {
-                    scope.stars = [];
-                    for (var i = 0; i < scope.max; i++) {
-                        scope.stars.push({
-                            filled: i < scope.ratingValue
+                    $scope.stars = [];
+                    for (var i = 0; i < max; i++) {
+                        $scope.stars.push({
+                            filled: i < Math.round($scope.rating)
                         });
                     }
-                };
-                scope.toggle = function (index) {
-                    if (scope.readonly == undefined || scope.readonly === false) {
-                        scope.ratingValue = index + 1;
-                        if (scope.onRatingSelect) {
-                            scope.onRatingSelect({
-                                rating: index + 1
-                            });
-                        }
-                    }
-                };
-                scope.$watch('ratingValue', function (oldValue, newValue) {
-                    if (newValue) {
-                        updateStars();
-                    }
-                });
-            }
+                }
+            }],
         };
     }
 })();

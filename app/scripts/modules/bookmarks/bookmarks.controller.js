@@ -9,6 +9,7 @@
     function bookmarksController(bookmarksService, placeService, mapService, logger, $scope) {
         let vm = this;
         vm.bookmarks = [];
+        vm.showAsField = {};
 
         vm.showPlaceDetails = function (bookmark) {
             _markerClickCallback(bookmark, true);
@@ -33,6 +34,20 @@
                     vm.bookmarks.splice(index, 1);
                     vm.noData = vm.bookmarks.length <= 0;
                     logger.success('Bookmark removed successfully!');
+                }, _errorHandler);
+        };
+
+        vm.toggleEditNote = function (index) {
+            vm.showAsField[index] = !vm.showAsField[index];
+        };
+
+        vm.saveBookmarkNote = function (index) {
+            let bookmark = vm.bookmarks[index];
+
+            bookmarksService.updateBookmark(bookmark)
+                .then(() => {
+                    vm.toggleEditNote(index);
+                    logger.success('Bookmark updated successfully!');
                 }, _errorHandler);
         };
 
