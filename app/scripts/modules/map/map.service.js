@@ -57,11 +57,7 @@
                 if (!_mapInstace) {
                     _mapInstace = map;
                 }
-                if (location) {
-                    _center(_mapInstace, location.coords.latitude, location.coords.longitude);
-                } else {
-                    _center(_mapInstace, 44.4267674, 26.102538399999958);
-                }
+                _center(_mapInstace, (location ? location.coords.latitude : 44.4267674), (location ? location.coords.longitude : 26.102538399999958));
                 setMapZoom(16);
 
                 if (!_centerMarker) {
@@ -172,6 +168,7 @@
         function searchNearbyPlaces() {
             var deferred = $q.defer();
             placeService.getMapPlacesService().then((service) => {
+                if(!_radius) _radius = _createRadius();
                 service.nearbySearch({
                     location: _mapInstace.getCenter(),
                     radius: _radius.getRadius(),
@@ -190,6 +187,7 @@
         function searchPlacesByText(query) {
             var deferred = $q.defer();
             placeService.getMapPlacesService().then((service) => {
+                if(!_radius) _radius = _createRadius();
                 service.textSearch({
                     location: _mapInstace.getCenter(),
                     radius: _radius.getRadius(),

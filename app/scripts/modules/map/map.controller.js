@@ -22,8 +22,13 @@
         var searchPanelBlock = blockUI.instances.get('search-panel');
         searchPanelBlock.start();
         $scope.$watch(() => mapService.mapInitialized, (newValue, oldValue) => {
-            if(newValue == oldValue) return;
-            if(newValue) searchPanelBlock.stop();
+            if (newValue == oldValue) return;
+            
+            if (mapService.mapInitialized == true) {
+                searchPanelBlock.stop();
+            } else {
+                searchPanelBlock.start();
+            }
         });
     }
 })();
