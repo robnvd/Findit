@@ -19,7 +19,7 @@
         config: {
           views: {
             'main': {
-              templateUrl: 'templates/map.tpl.html',
+              templateUrl: 'modules/map/map.tpl.html',
               controller: 'mapController',
               controllerAs: 'vm'
             }
@@ -32,7 +32,7 @@
           url: '/404',
           views: {
             'main': {
-              templateUrl: 'templates/core/404.tpl.html'
+              templateUrl: 'modules/core/templates/404.tpl.html'
             }
           }
         }

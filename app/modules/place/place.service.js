@@ -31,7 +31,7 @@
         function showPlaceDetails(place, refreshList = undefined) {
             return $uibModal.open({
                 backdrop: 'static',
-                templateUrl: 'templates/place.tpl.html',
+                templateUrl: 'modules/place/place.tpl.html',
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
                 size: 'lg',

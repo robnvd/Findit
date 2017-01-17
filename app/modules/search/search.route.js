@@ -17,7 +17,7 @@
                 state: 'root.search',
                 config: {
                     url: '/',
-                    templateUrl: 'templates/search.tpl.html',
+                    templateUrl: 'modules/search/search.tpl.html',
                     controller: 'searchController',
                     controllerAs: 'vm'
                 }

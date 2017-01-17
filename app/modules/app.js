@@ -1,5 +1,4 @@
 (function () {
-
     angular.module('Findit', [
         'Findit.Core',
         'Findit.Account',
@@ -10,5 +9,4 @@
         'Findit.Reviews',
         'Findit.Search',
     ]);
-    
 })();

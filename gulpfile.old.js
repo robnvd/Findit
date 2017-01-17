@@ -6,7 +6,6 @@ const wiredep = require('wiredep').stream;
 const replace = require('gulp-replace');
 const argv = require('yargs').argv;
 const gulpif = require('gulp-if');
-const historyApiFallback = require('connect-history-api-fallback')
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
@@ -27,12 +26,12 @@ gulp.task('styles', () => {
 });
 
 gulp.task('scripts', () => {
-  return gulp.src('app/modules/**/*.js')
+  return gulp.src('app/scripts/**/*.js')
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe($.babel())
     .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('.tmp/modules'))
+    .pipe(gulp.dest('.tmp/scripts'))
     .pipe(reload({ stream: true }));
 });
 
@@ -45,10 +44,10 @@ function lint(files, options) {
 }
 
 gulp.task('lint', () => {
-  return lint('app/modules/**/*.js', {
+  return lint('app/scripts/**/*.js', {
     fix: true
   })
-    .pipe(gulp.dest('app/modules'));
+    .pipe(gulp.dest('app/scripts'));
 });
 
 gulp.task('html', ['styles', 'scripts'], () => {
@@ -100,18 +99,19 @@ gulp.task('serve', ['styles', 'scripts', 'fonts'], () => {
       routes: {
         '/bower_components': 'bower_components'
       },
-      middleware: [historyApiFallback()]
+      middleware: [require("connect-logger")()]
     }
   });
 
   gulp.watch([
     'app/**/*.html',
     'app/images/**/*',
+    'app/templates/**/*.html',
     '.tmp/fonts/**/*'
   ]).on('change', reload);
 
   gulp.watch('app/styles/**/*.scss', ['styles']);
-  gulp.watch('app/modules/**/*.js', ['scripts']);
+  gulp.watch('app/scripts/**/*.js', ['scripts']);
   gulp.watch('app/fonts/**/*', ['fonts']);
   gulp.watch('bower.json', ['wiredep', 'fonts']);
 });

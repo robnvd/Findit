@@ -12,7 +12,7 @@
         //
         var directive = {
             bindToController: true,
-            templateUrl: 'templates/review.tpl.html',
+            templateUrl: 'modules/reviews/review.tpl.html',
             controller: directiveController,
             controllerAs: 'vm',
             link: linkFunction,

@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('Findit.Bookmarks')
+        .module('Findit.Reviews')
         .run(appRun);
 
     appRun.$inject = ['routerHelper'];
@@ -14,11 +14,11 @@
     function getStates() {
         return [
             {
-                state: 'root.bookmarks',
+                state: 'root.reviews',
                 config: {
-                    url: '/bookmarks',
-                    templateUrl: 'templates/bookmarks.tpl.html',
-                    controller: 'bookmarksController',
+                    url: '/reviews',
+                    templateUrl: 'modules/reviews/reviews.tpl.html',
+                    controller: 'reviewsController',
                     controllerAs: 'vm'
                 }
             }

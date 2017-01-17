@@ -16,7 +16,7 @@
         ////////////////
 
         function getPersonBookmarks() {
-            return dataService.get(`Bookmarks/MyBookmarks`);
+            return dataService.get('Bookmarks/MyBookmarks');
         }
 
         function getPlaceBookmark(placeId) {
@@ -24,11 +24,11 @@
         }
 
         function addToBookmarks(bookmark) {
-            return dataService.post(`Bookmarks/AddBookmark`, bookmark);
+            return dataService.post('Bookmarks/AddBookmark', bookmark);
         }
 
         function updateBookmark(bookmark) {
-            return dataService.put(`Bookmarks/UpdateBookmark`, bookmark);
+            return dataService.put('Bookmarks/UpdateBookmark', bookmark);
         }
 
         function removeFromBookmarks(placeId) {

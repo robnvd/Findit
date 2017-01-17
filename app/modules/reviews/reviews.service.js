@@ -14,7 +14,7 @@
         ////////////////
 
         function getPersonReviews() {
-            return dataService.get(`Reviews/MyReviews`);
+            return dataService.get('Reviews/MyReviews');
         }
 
         function getPlaceCustomReviews(placeId) {
