@@ -76,35 +76,30 @@
                 .then(() => { vm.dataIsLoading = false; }, _handleError);
         }
 
-        function _resolvePlaceDetails(place) {
-            return place;
+        function _resolvePlaceDetails(freshPlace) {
+            vm.place = freshPlace;
         }
 
-        function _resolvePlaceBookmark(place) {
-            return bookmarksService.getPlaceBookmark(place.place_id)
+        function _resolvePlaceBookmark() {
+            return bookmarksService.getPlaceBookmark(vm.place.place_id)
                 .then((response) => {
                     vm.hideBookmark = response && response.data ? true : false;
-                    return place;
                 }, _handleError);
         }
 
-        function _resolveCustomReviews(place) {
-            return reviewsService.getPlaceCustomReviews(place.place_id)
+        function _resolveCustomReviews() {
+            return reviewsService.getPlaceCustomReviews(vm.place.place_id)
                 .then((result) => {
-                    if (result.data && place.reviews) {
+                    if (result.data && vm.place.reviews) {
                         var transformedReviews = _turnCustomReviewToGoogleReview(result.data);
-                        place.reviews.push(...transformedReviews);
+                        vm.place.reviews.push(...transformedReviews);
                     }
-                    vm.place = place;
-                }, (err) => {
-                    vm.place = place;
-                    _handleError(err)
-                });
+                }, _handleError);
         }
 
         function _resolveAddCustomReview(response) {
-            if(!response) return;
-            
+            if (!response) return;
+
             if (!vm.place.reviews) vm.place.reviews = [];
             vm.place.reviews.push(..._turnCustomReviewToGoogleReview([response.data]));
             logger.success('Review saved successfully!');
@@ -140,8 +135,9 @@
         }
 
         function _handleError(err) {
-            //TODO handle error gracefully
-            logger.error(err);
+            if (parseInt(err.status) >= 500) {
+                logger.error(err);
+            }
         }
 
         //Private
