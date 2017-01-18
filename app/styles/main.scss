@@ -102,10 +102,11 @@ ng-map {
     text-align: right;
 }
 
-.ui-view-container {
+.ui-view-container, .side-panel {
     display: inline;
     padding: 15px 0;
 }
+
 .search-form-container {
     padding: 19px;
 }
@@ -169,10 +170,34 @@ blockquote {
         width: 100%; 
         display:block; 
     }
-    .full-width.margin-bottom {
-        margin-bottom: 5px;
+
+    .fill-map {
+        padding-left: 0;
+        padding-right: 0;
     }
 }
+
+.search-button {
+    margin-bottom: 5px;
+}
+
+@media all and (max-width: 991px) {
+    .full-width.margin-bottom, .btn-block.margin-bottom {
+        margin-bottom: 5px;
+    }
+
+    .modal-footer .btn + .btn {
+        margin-left: 0;
+        margin-bottom: 5px;
+    }
+
+    .side-panel {
+        display: block;
+        padding: 5px 5px;
+        margin: 5px 0;
+    }
+}
+
 .well {
     padding: 7px;
 }
