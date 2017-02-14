@@ -19,7 +19,8 @@
                     },
                     redirect: false
                 }
-            }
+            },
+            loginState: 'root.search'
         });
     }
 

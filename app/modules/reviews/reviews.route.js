@@ -19,7 +19,8 @@
                     url: '/reviews',
                     templateUrl: 'modules/reviews/reviews.tpl.html',
                     controller: 'reviewsController',
-                    controllerAs: 'vm'
+                    controllerAs: 'vm',
+                    data: { requiresLogin: true }
                 }
             }
         ];

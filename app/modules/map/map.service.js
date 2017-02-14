@@ -35,28 +35,29 @@
         service.setCenterMarkerPosition = setCenterMarkerPosition;
 
         service.clearAllMarkers = clearAllMarkers;
-        service.clearMarkersOutOfRange = clearMarkersOutOfRange;
         service.addMarkerToMapForPlace = addMarkerToMapForPlace;
 
         service.getCurrentLocation = getCurrentLocation;
 
         /////////////////
 
-        function init(options) {
+        function init(options, hardReset = false) {
             _options = options;
             return getCurrentLocation().then((location) => {
-                return _initInstances(location);
+                return _initInstances(location, hardReset);
             }, (err) => {
-                return _initInstances(null);
+                return _initInstances(null, hardReset);
             })
 
         }
 
-        function _initInstances(location) {
+        function _initInstances(location, hardReset = false) {
             return getMapInstance().then((map) => {
                 if (!_mapInstace) {
                     _mapInstace = map;
                 }
+                if(hardReset) { clearMap(); }
+
                 _center(_mapInstace, (location ? location.coords.latitude : 44.4267674), (location ? location.coords.longitude : 26.102538399999958));
                 setMapZoom(16);
 
@@ -101,7 +102,7 @@
             clearAllMarkers();
             const center = getMapCenter();
             for (let i = 0; i < results.length; i++) {
-                if (google.maps.geometry.spherical.computeDistanceBetween(results[i].geometry.location, center) <= _options.radius) {
+                if (google.maps.geometry.spherical.computeDistanceBetween(results[i].geometry.location, center) <= _radius.getRadius()) {
                     addMarkerToMapForPlace(results[i], _markerClickCallback);
                 }
             }
@@ -209,11 +210,14 @@
             _radius.setRadius(size);
         }
         function setRadiusCenter(arg1, arg2) {
+            if(!_radius) _radius = _createRadius();
             _center(_radius, arg1, arg2);
         }
 
         //Center marker API
         function setCenterMarkerPosition(arg1, arg2) {
+            if(!_centerMarker) _centerMarker = _createCenterMarker();
+
             if (arg2) {
                 const center = new google.maps.LatLng(arg1, arg2);
                 _centerMarker.setPosition(center);
@@ -228,14 +232,6 @@
                 marker.setMap(null);
             });
             _markers = [];
-        }
-
-        function clearMarkersOutOfRange() {
-            angular.forEach(_markers, (marker) => {
-                if (google.maps.geometry.spherical.computeDistanceBetween(marker.getPosition(), _mapInstace.getCenter()) > _radius.getRadius()) {
-                    marker.setMap(null);
-                }
-            });
         }
 
         function addMarkerToMapForPlace(place, clickEvent) {

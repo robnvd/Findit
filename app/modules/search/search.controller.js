@@ -55,7 +55,7 @@
             mapService.mapInitialized = false;
             mapService.init({
                 radius: vm.searchData.radius
-            }).then(_searchNearbyPlacesAndShowOnMap, _handleErrors);
+            }, true).then(_searchNearbyPlacesAndShowOnMap, _handleErrors);
         };
 
         function _searchNearbyPlacesAndShowOnMap() {

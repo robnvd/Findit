@@ -3,12 +3,15 @@
         .module('Findit.Nav')
         .controller('navController', controller);
 
-    controller.$inject = ['authService'];
-    function controller(authService) {
+    controller.$inject = ['authService', '$state'];
+    function controller(authService, $state) {
         var vm = this;
 
         vm.login = authService.login;
-        vm.logout = authService.logout;
+        vm.logout = function() { 
+            authService.logout();
+            $state.go('root.search');
+        };
 
         authService.currentUser().then(_init);
 

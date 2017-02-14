@@ -19,7 +19,8 @@
                     url: '/bookmarks',
                     templateUrl: 'modules/bookmarks/bookmarks.tpl.html',
                     controller: 'bookmarksController',
-                    controllerAs: 'vm'
+                    controllerAs: 'vm',
+                    data: { requiresLogin: true }
                 }
             }
         ];
